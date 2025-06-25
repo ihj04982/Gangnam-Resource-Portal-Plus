@@ -1,3 +1,5 @@
+// file format change .js -> .cjs
+
 module.exports = {
     semi: true,
     singleQuote: true,
