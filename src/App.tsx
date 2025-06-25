@@ -1,26 +1,20 @@
-import React, { Suspense } from 'react';
+import { Routes, Route } from 'react-router';
 import './App.css';
-import LoadingSpinner from './common/components/LoadingSpinner';
-import { Route, Routes } from 'react-router-dom';
-import AppLayout from './layout/AppLayout';
-import HomePage from './pages/HomePage/HomePage';
+import React, { Suspense } from 'react';
+import LargeWasteDisposalPage from './pages/LargeWasteDisposalPage/LargeWasteDisposalPage';
 
-function App() {
-  const LargeWasteDisposalPage = React.lazy(() => import('./pages/LargeWasteDisposalPage/LargeWasteDisposalPage'));
+const AppLayout = React.lazy(() => import('./layout/AppLayout'));
 
+const App = () => {
   return (
-    <Suspense fallback={<LoadingSpinner />}>
+    <Suspense>
       <Routes>
-        {/* HomePage는 별도 */}
-        <Route path="/" element={<HomePage />} />
-
-        {/* AppLayout이 필요한 경로 */}
-        <Route path="/largewaste" element={<AppLayout />}>
-          <Route index element={<LargeWasteDisposalPage />} />
-        </Route>
+        <Route path="/" element={<AppLayout />}>
+          <Route path="largewaste" element={<LargeWasteDisposalPage />} />
+        </Route>     
       </Routes>
     </Suspense>
   );
-}
+};
 
 export default App;
