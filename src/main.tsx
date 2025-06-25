@@ -4,11 +4,16 @@ import './index.css';
 import App from './App.tsx';
 import theme from './theme.ts';
 import { ThemeProvider } from '@mui/material/styles';
+import { BrowserRouter } from 'react-router';
+import { CssBaseline } from '@mui/material';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ThemeProvider theme={theme}>
-      <App />
-    </ThemeProvider>
+    <BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <App />
+      </ThemeProvider>
+    </BrowserRouter>
   </StrictMode>,
 );
