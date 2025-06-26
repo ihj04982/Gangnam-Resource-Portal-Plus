@@ -4,6 +4,7 @@ import React, { Suspense } from 'react';
 import LargeWasteDisposalPage from './pages/LargeWasteDisposalPage/LargeWasteDisposalPage';
 
 const AppLayout = React.lazy(() => import('./layout/AppLayout'));
+const LocationPage = React.lazy(() => import('./pages/LocationPage/LocationPage'));
 
 const App = () => {
   return (
@@ -11,7 +12,8 @@ const App = () => {
       <Routes>
         <Route path="/" element={<AppLayout />}>
           <Route path="largewaste" element={<LargeWasteDisposalPage />} />
-        </Route>     
+          <Route path="locations" element={<LocationPage />} />
+        </Route>
       </Routes>
     </Suspense>
   );
