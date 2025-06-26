@@ -27,7 +27,7 @@ export interface FluorescentBatteryLocation {
   데이터기준일: string;
 }
 
-export interface ILocationApiResponse<T> {
+export interface LocationApiResponse<T> {
   page: number;
   perPage: number;
   totalCount: number;
