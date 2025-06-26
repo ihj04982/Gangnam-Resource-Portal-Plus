@@ -4,13 +4,7 @@ import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 import { db } from '../../firebaseConfig';
 import NoticeTable from './components/NoticeTable';
 import SearchBar from './components/SearchBar';
-
-export interface FaqItem {
-  index: number;
-  date: string;
-  title: string;
-  contents: string[];
-}
+import type { FaqItem } from '../../models/notice';
 
 const FaqPage = () => {
   const [faqs, setFaqs] = useState<FaqItem[]>([]);
@@ -30,10 +24,13 @@ const FaqPage = () => {
 
         const fetchedFaqs: FaqItem[] = [];
         querySnapshot.forEach((doc) => {
-          fetchedFaqs.push(doc.data() as FaqItem);
+          fetchedFaqs.push({
+            id: doc.id, // !!! 여기에서 문서 ID를 가져와 FaqItem에 추가합니다.
+            ...(doc.data() as Omit<FaqItem, 'id'>), // FaqItem에서 id 필드를 제외한 나머지 데이터를 가져옴
+          });
         });
         setFaqs(fetchedFaqs);
-        setFilteredFaqs(fetchedFaqs); // 초기에는 전체 FAQ를 표시
+        setFilteredFaqs(fetchedFaqs);
       } catch (err) {
         console.error('Error fetching documents: ', err);
         setError('데이터를 불러오는 데 실패했습니다.');
@@ -78,7 +75,7 @@ const FaqPage = () => {
   if (faqs.length === 0 && !loading) {
     return <div>아직 등록된 FAQ가 없습니다.</div>;
   }
-
+  console.log(faqs);
   return (
     <Container maxWidth="md">
       <Typography variant="h6" textAlign="center" sx={{ mb: 4 }}>

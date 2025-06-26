@@ -1,13 +1,7 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-export interface FaqItem {
-  index: number;
-  date: string;
-  title: string;
-  contents: string[];
-}
-interface NoticeTableProps {
-  data: FaqItem[];
-}
+
+import type { NoticeTableProps } from '../../../models/notice';
+import TableRowWrap from './TableRowWrap';
 
 const NoticeTable = ({ data }: NoticeTableProps) => {
   return (
@@ -22,13 +16,7 @@ const NoticeTable = ({ data }: NoticeTableProps) => {
         </TableHead>
         <TableBody>
           {data.map((row) => (
-            <TableRow key={row.index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-              <TableCell component="th" scope="row">
-                {row.index}
-              </TableCell>
-              <TableCell>{row.title}</TableCell>
-              <TableCell>{row.date}</TableCell>
-            </TableRow>
+            <TableRowWrap index={row.index} date={row.date} contents={row.contents} title={row.title} id={row.id} />
           ))}
         </TableBody>
       </Table>
