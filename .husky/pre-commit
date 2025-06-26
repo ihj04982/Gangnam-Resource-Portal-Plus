@@ -1,0 +1,18 @@
+echo "🔍 Running pre-commit checks..."
+
+# TypeScript 타입 체크
+echo "📘 Checking TypeScript types..."
+npm run build
+
+# ESLint 검사 
+echo "🔧 Running ESLint..."
+npm run lint
+
+# Prettier로 staged files 포맷팅
+echo "✨ Running Prettier on staged files..."
+npx prettier --write --ignore-unknown $(git diff --cached --name-only --diff-filter=ACMR | tr '\n' ' ')
+
+# 포맷팅된 파일들을 staging area에 다시 추가
+git update-index --again
+
+echo "✅ All pre-commit checks passed!"

@@ -5,6 +5,7 @@ import LargeWasteDisposalPage from './pages/LargeWasteDisposalPage/LargeWasteDis
 import FreeDisposalPage from './pages/FreeDisposalPage/FreeDisposalPage';
 
 const AppLayout = React.lazy(() => import('./layout/AppLayout'));
+const LocationPage = React.lazy(() => import('./pages/LocationPage/LocationPage'));
 
 const App = () => {
   return (
@@ -13,7 +14,8 @@ const App = () => {
         <Route path="/" element={<AppLayout />}>
           <Route path="largewaste" element={<LargeWasteDisposalPage />} />
           <Route path="freedisposal" element={<FreeDisposalPage />} />
-        </Route>     
+          <Route path="locations" element={<LocationPage />} />
+        </Route>
       </Routes>
     </Suspense>
   );

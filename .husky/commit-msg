@@ -1,0 +1,18 @@
+# 커밋 메시지 읽기
+commit_msg=$(cat $1)
+
+echo "📝 Validating commit message..."
+
+# 빈 커밋 메시지 체크
+if [ -z "$(echo "$commit_msg" | tr -d '\n\r ')" ]; then
+    echo "❌ Commit message cannot be empty!"
+    exit 1
+fi
+
+# 최소 길이 체크 (5자 이상)
+if [ ${#commit_msg} -lt 5 ]; then
+    echo "❌ Commit message too short! Please write a meaningful message (at least 5 characters)."
+    exit 1
+fi
+
+echo "✅ Commit message looks good!" 
