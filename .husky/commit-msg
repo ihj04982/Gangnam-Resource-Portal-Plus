@@ -1,0 +1,21 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# 커밋 메시지 읽기
+commit_msg=$(cat $1)
+
+echo "커밋 메시지 검사 시작"
+
+# 빈 커밋 메시지 체크
+if [ -z "$(echo "$commit_msg" | tr -d '\n\r ')" ]; then
+    echo "❌ 커밋 메시지는 비어있을 수 없습니다~"
+    exit 1
+fi
+
+# 최소 길이 체크 (5자 이상)
+if [ ${#commit_msg} -lt 5 ]; then
+    echo "❌ 커밋 메시지는 최소 5자 이상이어야 합니다."
+    exit 1
+fi
+
+echo "✅ 커밋 메시지 검사 완료" 

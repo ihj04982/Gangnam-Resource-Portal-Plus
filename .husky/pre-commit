@@ -1,0 +1,21 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "pre-commit 체크 시작"
+
+# TypeScript 타입 체크
+echo "TypeScript types 검사"
+npm run build
+
+# ESLint 검사 
+echo "ESLint 검사"
+npm run lint
+
+# Prettier로 staged files 포맷팅
+echo "staged files에 대해 Prettier 적용"
+npx prettier --write --ignore-unknown $(git diff --cached --name-only --diff-filter=ACMR | tr '\n' ' ')
+
+# 포맷팅된 파일들을 staging area에 다시 추가
+git update-index --again
+
+echo "✅ 모든 pr-commit 체크 완료"
