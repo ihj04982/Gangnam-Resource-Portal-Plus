@@ -6,8 +6,10 @@ import AnnouncementsPage from './pages/NoticePage/AnnouncementsPage';
 import FaqPage from './pages/NoticePage/FaqPage';
 import FaqDetail from './pages/NoticePage/FaqDetail';
 import AnnouncementsDetail from './pages/NoticePage/AnnouncementsDetail';
+import FreeDisposalPage from './pages/FreeDisposalPage/FreeDisposalPage';
 
 const AppLayout = React.lazy(() => import('./layout/AppLayout'));
+const LocationPage = React.lazy(() => import('./pages/LocationPage/LocationPage'));
 
 const App = () => {
   return (
@@ -26,6 +28,8 @@ const App = () => {
               <Route path=":id" element={<FaqDetail />} />
             </Route>
           </Route>
+          <Route path="freedisposal" element={<FreeDisposalPage />} />
+          <Route path="locations" element={<LocationPage />} />
         </Route>
       </Routes>
     </Suspense>
