@@ -1,16 +1,17 @@
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { useEffect, useState } from 'react';
 import { doc, getDoc } from 'firebase/firestore';
-import { Container, Typography, Paper, Box } from '@mui/material';
+import { Container, Typography, Paper, Box, CircularProgress } from '@mui/material';
 import { db } from '../../firebaseConfig';
 import type { FaqItem } from '../../models/notice';
+import NoticeReturnButton from './components/NoticeReturnButton';
 
 const FaqDetail = () => {
   const { id } = useParams<{ id: string }>(); // URL에서 문서 ID를 id로 가져옵니다.
   const [faq, setFaq] = useState<FaqItem | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchFaqDetail = async () => {
       if (!id) {
@@ -46,9 +47,9 @@ const FaqDetail = () => {
 
   if (loading) {
     return (
-      <Container maxWidth="md">
-        <Typography>FAQ를 불러오는 중...</Typography>
-      </Container>
+      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        <CircularProgress />
+      </Box>
     );
   }
 
@@ -67,28 +68,38 @@ const FaqDetail = () => {
       </Container>
     );
   }
-
+  const handleGoBackToList = () => {
+    navigate('/notice/faq'); // 공지사항 목록 페이지의 경로로 변경하세요.
+  };
   return (
     <Container maxWidth="md">
       <Paper elevation={3} sx={{ p: 4, mb: 4 }}>
-        <Typography variant="h5" textAlign="center" sx={{ mb: 4 }}>
+        <Typography variant="h6" textAlign="center" sx={{ mb: 4, wordBreak: 'keep-all' }}>
           {faq.title}
         </Typography>
         <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 2 }}>
           등록일: {faq.date}
         </Typography>
         <Box>
+          {faq.url ? (
+            <Box sx={{ display: 'flex', justifyContent: 'center', margin: '1rem auto' }}>
+              <img src={faq.url} alt={faq.title} style={{ maxWidth: '100%' }} />
+            </Box>
+          ) : (
+            ''
+          )}
           {faq.contents.map(
             (
               line,
               idx, // map 함수의 두 번째 인자는 index이므로 충돌 방지를 위해 idx로 변경
             ) => (
-              <Typography key={idx} variant="body1" paragraph>
+              <Typography sx={{ wordBreak: 'keep-all' }} key={idx} variant="body1" paragraph>
                 {line}
               </Typography>
             ),
           )}
-        </Box>
+        </Box>{' '}
+        <NoticeReturnButton onClick={handleGoBackToList} />
       </Paper>
     </Container>
   );
