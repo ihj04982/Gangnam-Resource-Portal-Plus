@@ -23,20 +23,19 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   };
 
   return (
-    <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
+    <Box sx={{ my: '2rem', display: 'flex', gap: 1, justifyContent: 'center', alignItems: 'stretch' }}>
       <TextField
-        label="검색어를 입력하세요"
-        variant="outlined"
+        sx={{ width: '300px' }}
+        label="제목 및 내용을 입력해주세요."
+        id="outlined-size-small"
+        defaultValue="Small"
+        size="small"
         value={inputValue}
         onChange={handleInputChange}
         onKeyPress={handleKeyPress}
         fullWidth
       />
-      <Button
-        variant="contained"
-        onClick={handleSearchClick}
-        sx={{ height: '56px' }} // TextField와 높이를 맞춥니다.
-      >
+      <Button variant="contained" onClick={handleSearchClick}>
         검색
       </Button>
     </Box>

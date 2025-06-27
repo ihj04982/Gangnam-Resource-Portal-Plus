@@ -1,4 +1,5 @@
-import { Container, Typography } from '@mui/material';
+import { Container, Typography, Box } from '@mui/material';
+import Pagination from '@mui/material/Pagination';
 import { useEffect, useState } from 'react';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 import { db } from '../../firebaseConfig';
@@ -10,10 +11,12 @@ const AnnouncementsPage = () => {
   const [announcements, setAnnouncements] = useState<AnnouncementsItem[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  // 검색 결과에 따라 필터링된 FAQ를 저장할 새로운 상태
   const [filteredAnnouncements, setFilteredAnnouncements] = useState<AnnouncementsItem[]>([]);
 
-  // useEffect에서 초기 데이터를 불러온 후 filteredAnnouncements도 초기화합니다.
+  // 페이지네이션 상태
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const itemsPerPage = 5; // 페이지당 표시할 항목 수
+
   useEffect(() => {
     const fetchAnnouncements = async () => {
       try {
@@ -25,14 +28,14 @@ const AnnouncementsPage = () => {
         const fetchedAnnouncements: AnnouncementsItem[] = [];
         querySnapshot.forEach((doc) => {
           fetchedAnnouncements.push({
-            id: doc.id, // !!! 여기에서 문서 ID를 가져와 AnnouncementsItem에 추가합니다.
-            ...(doc.data() as Omit<AnnouncementsItem, 'id'>), // AnnouncementsItem에서 id 필드를 제외한 나머지 데이터를 가져옴
+            id: doc.id,
+            ...(doc.data() as Omit<AnnouncementsItem, 'id'>),
           });
         });
         setAnnouncements(fetchedAnnouncements);
-        setFilteredAnnouncements(fetchedAnnouncements);
+        setFilteredAnnouncements(fetchedAnnouncements); // 초기 filteredAnnouncements를 모든 데이터로 초기화합니다.
       } catch (err) {
-        console.error('Error fetching documents: ', err);
+        console.error('문서 가져오기 오류: ', err);
         setError('데이터를 불러오는 데 실패했습니다.');
       } finally {
         setLoading(false);
@@ -43,23 +46,33 @@ const AnnouncementsPage = () => {
   }, []);
 
   const handleSearch = (searchTerm: string) => {
-    // 검색어가 비어있으면 전체 FAQ를 표시합니다.
     if (!searchTerm.trim()) {
       setFilteredAnnouncements(announcements);
-      return;
+    } else {
+      const lowerCaseSearchTerm = searchTerm.toLowerCase();
+      const results = announcements.filter((announcement) => {
+        const titleMatches = announcement.title.toLowerCase().includes(lowerCaseSearchTerm);
+        // 공지사항 내용은 현재 검색에 포함되지 않으므로, 제목만 확인합니다.
+        // 만약 공지사항 내용도 검색하고 싶다면 아래 주석을 해제하고 AnnouncementsItem에 contents 필드가 있는지 확인하세요.
+        // const contentMatches = announcement.contents?.some((line) => line.toLowerCase().includes(lowerCaseSearchTerm));
+        // return titleMatches || contentMatches;
+        return titleMatches;
+      });
+      setFilteredAnnouncements(results);
     }
+    setCurrentPage(1); // 새 검색이 수행될 때 첫 페이지로 재설정합니다.
+  };
 
-    // 검색어를 소문자로 변환하여 비교할 준비를 합니다.
-    const lowerCaseSearchTerm = searchTerm.toLowerCase();
+  // 총 페이지 수 계산
+  const totalPages = Math.ceil(filteredAnnouncements.length / itemsPerPage);
 
-    // announcements 배열에서 검색어에 맞는 항목을 필터링합니다.
-    const results = announcements.filter((announcement) => {
-      // announcement 제목에 검색어가 포함되어 있는지 확인
-      const titleMatches = announcement.title.toLowerCase().includes(lowerCaseSearchTerm);
-      return titleMatches;
-    });
+  // 현재 페이지에 표시할 공지사항 가져오기
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentAnnouncements = filteredAnnouncements.slice(startIndex, endIndex);
 
-    setFilteredAnnouncements(results);
+  const handlePageChange = (_event: React.ChangeEvent<unknown>, value: number) => {
+    setCurrentPage(value);
   };
 
   if (loading) {
@@ -70,19 +83,39 @@ const AnnouncementsPage = () => {
     return <div>오류: {error}</div>;
   }
 
+  // 데이터가 없으면서 로딩 중이 아닐 때 메시지 표시
   if (announcements.length === 0 && !loading) {
-    return <div>아직 등록된 FAQ가 없습니다.</div>;
+    return (
+      <Container maxWidth="md" sx={{ my: '2rem' }}>
+        <Typography variant="h6" textAlign="center">
+          공지사항
+        </Typography>
+        <Typography variant="body1" textAlign="center" sx={{ mt: 3 }}>
+          아직 등록된 공지사항이 없습니다.
+        </Typography>
+      </Container>
+    );
   }
-  console.log(announcements);
 
   return (
-    <Container maxWidth="md">
-      <Typography variant="h6" textAlign="center">
+    <Container maxWidth="md" sx={{ my: '2rem' }}>
+      <Typography variant="h6" textAlign="center" sx={{ mb: 4 }}>
         공지사항
       </Typography>
       <SearchBar onSearch={handleSearch} />
-      {filteredAnnouncements.length > 0 ? (
-        <AnnouncementTable data={filteredAnnouncements} />
+      {currentAnnouncements.length > 0 ? (
+        <>
+          <AnnouncementTable data={currentAnnouncements} /> {/* 현재 페이지의 공지사항만 렌더링합니다. */}
+          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
+            <Pagination
+              sx={{ my: '1rem' }}
+              count={totalPages}
+              page={currentPage}
+              onChange={handlePageChange}
+              color="primary"
+            />
+          </Box>
+        </>
       ) : (
         <Typography variant="body1" textAlign="center" sx={{ mt: 3 }}>
           검색 결과가 없습니다.

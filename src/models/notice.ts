@@ -4,6 +4,7 @@ export interface FaqItem {
   date: string;
   title: string;
   contents: string[];
+  url?: string;
 }
 export interface NoticeTableProps {
   data: FaqItem[];
