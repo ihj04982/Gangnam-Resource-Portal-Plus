@@ -96,7 +96,7 @@ const CircleMenu = () => {
             zIndex: -1,
           }}
         >
-          <source src="../contents/SSYouTube.online_(무료영상)하늘_1080p" type="video/mp4" />
+          <source src="/contents/SSYouTube.online_(무료영상)하늘_1080p.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
