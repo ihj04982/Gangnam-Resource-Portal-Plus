@@ -4,7 +4,7 @@ const LargeWasteDisposalPage = () => {
   return (
     <div style={{ padding: '24px' }}>
       <Typography variant="h5" gutterBottom>
-        대형생활폐기물 배출
+        ▪ 대형생활폐기물 배출
       </Typography>
       <Box sx={{ border: '1px solid #ccc', borderRadius: 1, p: 3, backgroundColor: '#e8f5e9' }}>
         <Typography variant="subtitle1" fontWeight="bold" gutterBottom>

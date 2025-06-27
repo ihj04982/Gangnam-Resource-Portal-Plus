@@ -17,7 +17,11 @@ const App = () => {
     <Suspense>
       <Routes>
         <Route path="/" element={<AppLayout />}>
-          <Route path="largewaste" element={<LargeWasteDisposalPage />} />
+          <Route path="largewaste">
+            <Route index element={<LargeWasteDisposalPage />} />
+            <Route path="free" element={<FreeDisposalPage />} />
+          </Route>
+
           <Route path="notice">
             <Route index element={<Navigate to="announcements" replace />} />
             <Route path="announcements">
@@ -29,7 +33,7 @@ const App = () => {
               <Route path=":id" element={<FaqDetail />} />
             </Route>
           </Route>
-          <Route path="freedisposal" element={<FreeDisposalPage />} />
+
           <Route path="locations" element={<LocationPage />} />
           <Route path="/practice" element={<CircleMenu />} />
         </Route>
