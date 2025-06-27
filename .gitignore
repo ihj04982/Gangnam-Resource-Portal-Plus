@@ -23,5 +23,9 @@ dist-ssr
 *.sln
 *.sw?
 
+# 환경 변수 파일 제외
+.env
+.env.local
+.env.*.local
 # Cursor 
 .cursor
