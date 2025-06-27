@@ -83,7 +83,7 @@ const AnnouncementsDetail = () => {
   return (
     <Container maxWidth="md">
       <Paper elevation={3} sx={{ p: 4, mb: 4 }}>
-        <Typography variant="h5" textAlign="center" sx={{ mb: 4, wordBreak: 'keep-all' }}>
+        <Typography variant="h6" textAlign="center" sx={{ mb: 4, wordBreak: 'keep-all' }}>
           {announcement.title}
         </Typography>
         <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 2 }}>

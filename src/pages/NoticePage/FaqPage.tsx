@@ -1,4 +1,5 @@
-import { Container, Typography } from '@mui/material';
+import { Container, Typography, Box } from '@mui/material'; // Box를 임포트하여 유연한 레이아웃을 만듭니다.
+import Pagination from '@mui/material/Pagination'; // Pagination 컴포넌트를 임포트합니다.
 import { useEffect, useState } from 'react';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 import { db } from '../../firebaseConfig';
@@ -10,29 +11,30 @@ const FaqPage = () => {
   const [faqs, setFaqs] = useState<FaqItem[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  // 검색 결과에 따라 필터링된 FAQ를 저장할 새로운 상태
   const [filteredFaqs, setFilteredFaqs] = useState<FaqItem[]>([]);
 
-  // useEffect에서 초기 데이터를 불러온 후 filteredFaqs도 초기화합니다.
+  // 페이지네이션 상태
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const itemsPerPage = 5; // 페이지당 표시할 항목 수
+
   useEffect(() => {
     const fetchFaqs = async () => {
       try {
         const faqsCollectionRef = collection(db, 'faq');
         const q = query(faqsCollectionRef, orderBy('index', 'desc'));
-
         const querySnapshot = await getDocs(q);
 
         const fetchedFaqs: FaqItem[] = [];
         querySnapshot.forEach((doc) => {
           fetchedFaqs.push({
-            id: doc.id, // !!! 여기에서 문서 ID를 가져와 FaqItem에 추가합니다.
-            ...(doc.data() as Omit<FaqItem, 'id'>), // FaqItem에서 id 필드를 제외한 나머지 데이터를 가져옴
+            id: doc.id,
+            ...(doc.data() as Omit<FaqItem, 'id'>),
           });
         });
         setFaqs(fetchedFaqs);
-        setFilteredFaqs(fetchedFaqs);
+        setFilteredFaqs(fetchedFaqs); // 초기 filteredFaqs를 모든 데이터로 초기화합니다.
       } catch (err) {
-        console.error('Error fetching documents: ', err);
+        console.error('문서 가져오기 오류: ', err);
         setError('데이터를 불러오는 데 실패했습니다.');
       } finally {
         setLoading(false);
@@ -43,25 +45,30 @@ const FaqPage = () => {
   }, []);
 
   const handleSearch = (searchTerm: string) => {
-    // 검색어가 비어있으면 전체 FAQ를 표시합니다.
     if (!searchTerm.trim()) {
       setFilteredFaqs(faqs);
-      return;
+    } else {
+      const lowerCaseSearchTerm = searchTerm.toLowerCase();
+      const results = faqs.filter((faq) => {
+        const titleMatches = faq.title.toLowerCase().includes(lowerCaseSearchTerm);
+        const contentMatches = faq.contents.some((line) => line.toLowerCase().includes(lowerCaseSearchTerm));
+        return titleMatches || contentMatches;
+      });
+      setFilteredFaqs(results);
     }
+    setCurrentPage(1); // 새 검색이 수행될 때 첫 페이지로 재설정합니다.
+  };
 
-    // 검색어를 소문자로 변환하여 비교할 준비를 합니다.
-    const lowerCaseSearchTerm = searchTerm.toLowerCase();
+  // 총 페이지 수 계산
+  const totalPages = Math.ceil(filteredFaqs.length / itemsPerPage);
 
-    // faqs 배열에서 검색어에 맞는 항목을 필터링합니다.
-    const results = faqs.filter((faq) => {
-      // FAQ 제목에 검색어가 포함되어 있는지 확인
-      const titleMatches = faq.title.toLowerCase().includes(lowerCaseSearchTerm);
-      // FAQ 내용에 검색어가 포함되어 있는지 확인 (각 줄을 확인)
-      const contentMatches = faq.contents.some((line) => line.toLowerCase().includes(lowerCaseSearchTerm));
-      return titleMatches || contentMatches;
-    });
+  // 현재 페이지에 표시할 FAQ 가져오기
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentFaqs = filteredFaqs.slice(startIndex, endIndex);
 
-    setFilteredFaqs(results);
+  const handlePageChange = (_event: React.ChangeEvent<unknown>, value: number) => {
+    setCurrentPage(value);
   };
 
   if (loading) {
@@ -75,15 +82,20 @@ const FaqPage = () => {
   if (faqs.length === 0 && !loading) {
     return <div>아직 등록된 FAQ가 없습니다.</div>;
   }
-  console.log(faqs);
+
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="md" sx={{ my: '2rem' }}>
       <Typography variant="h6" textAlign="center" sx={{ mb: 4 }}>
         자주 묻는 질문
       </Typography>
       <SearchBar onSearch={handleSearch} />
-      {filteredFaqs.length > 0 ? (
-        <FaqTable data={filteredFaqs} />
+      {currentFaqs.length > 0 ? (
+        <>
+          <FaqTable data={currentFaqs} /> {/* 현재 페이지의 FAQ만 렌더링합니다. */}
+          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
+            <Pagination count={totalPages} page={currentPage} onChange={handlePageChange} color="primary" />
+          </Box>
+        </>
       ) : (
         <Typography variant="body1" textAlign="center" sx={{ mt: 3 }}>
           검색 결과가 없습니다.
