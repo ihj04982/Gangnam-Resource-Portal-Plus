@@ -5,7 +5,7 @@ import { Container, Typography, Paper, Box } from '@mui/material';
 import { db } from '../../firebaseConfig';
 import type { FaqItem } from '../../models/notice';
 
-const NoticeDetail = () => {
+const FaqDetail = () => {
   const { id } = useParams<{ id: string }>(); // URL에서 문서 ID를 id로 가져옵니다.
   const [faq, setFaq] = useState<FaqItem | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -70,10 +70,10 @@ const NoticeDetail = () => {
 
   return (
     <Container maxWidth="md">
-      <Typography variant="h5" textAlign="center" sx={{ mb: 4 }}>
-        {faq.title}
-      </Typography>
       <Paper elevation={3} sx={{ p: 4, mb: 4 }}>
+        <Typography variant="h5" textAlign="center" sx={{ mb: 4 }}>
+          {faq.title}
+        </Typography>
         <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 2 }}>
           등록일: {faq.date}
         </Typography>
@@ -94,4 +94,4 @@ const NoticeDetail = () => {
   );
 };
 
-export default NoticeDetail;
+export default FaqDetail;

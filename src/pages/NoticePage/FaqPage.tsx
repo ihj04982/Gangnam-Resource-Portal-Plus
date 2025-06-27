@@ -2,7 +2,7 @@ import { Container, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 import { db } from '../../firebaseConfig';
-import NoticeTable from './components/NoticeTable';
+import FaqTable from './components/Faqs/FaqTable';
 import SearchBar from './components/SearchBar';
 import type { FaqItem } from '../../models/notice';
 
@@ -83,7 +83,7 @@ const FaqPage = () => {
       </Typography>
       <SearchBar onSearch={handleSearch} />
       {filteredFaqs.length > 0 ? (
-        <NoticeTable data={filteredFaqs} />
+        <FaqTable data={filteredFaqs} />
       ) : (
         <Typography variant="body1" textAlign="center" sx={{ mt: 3 }}>
           검색 결과가 없습니다.

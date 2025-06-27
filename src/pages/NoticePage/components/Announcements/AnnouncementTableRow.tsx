@@ -1,13 +1,13 @@
 import { TableCell, TableRow } from '@mui/material';
-import type { FaqItem } from '../../../models/notice';
 import { useNavigate } from 'react-router';
+import type { AnnouncementsItem } from '../../../../models/notice';
 
-const TableRowWrap = ({ id, index, title, date }: FaqItem) => {
+const AnnouncementTableRow = ({ id, index, title, date }: AnnouncementsItem) => {
   const nav = useNavigate();
   return (
     <TableRow
       onClick={() => {
-        nav(`/notice/faq/${id}`);
+        nav(`/notice/announcements/${id}`);
       }}
       key={id}
       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -21,4 +21,4 @@ const TableRowWrap = ({ id, index, title, date }: FaqItem) => {
   );
 };
 
-export default TableRowWrap;
+export default AnnouncementTableRow;

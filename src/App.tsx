@@ -4,7 +4,8 @@ import React, { Suspense } from 'react';
 import LargeWasteDisposalPage from './pages/LargeWasteDisposalPage/LargeWasteDisposalPage';
 import AnnouncementsPage from './pages/NoticePage/AnnouncementsPage';
 import FaqPage from './pages/NoticePage/FaqPage';
-import NoticeDetail from './pages/NoticePage/NoticeDetail';
+import FaqDetail from './pages/NoticePage/FaqDetail';
+import AnnouncementsDetail from './pages/NoticePage/AnnouncementsDetail';
 
 const AppLayout = React.lazy(() => import('./layout/AppLayout'));
 
@@ -18,11 +19,11 @@ const App = () => {
             <Route index element={<Navigate to="announcements" replace />} />
             <Route path="announcements">
               <Route index element={<AnnouncementsPage />} />
-              <Route path=":id" element={<NoticeDetail />} />
+              <Route path=":id" element={<AnnouncementsDetail />} />
             </Route>
             <Route path="faq">
               <Route index element={<FaqPage />} />
-              <Route path=":id" element={<NoticeDetail />} />
+              <Route path=":id" element={<FaqDetail />} />
             </Route>
           </Route>
         </Route>

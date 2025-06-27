@@ -1,9 +1,9 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 
-import type { NoticeTableProps } from '../../../models/notice';
-import TableRowWrap from './TableRowWrap';
+import type { AnnouncementsTableProps } from '../../../../models/notice';
+import AnnouncementTableRow from './AnnouncementTableRow';
 
-const NoticeTable = ({ data }: NoticeTableProps) => {
+const AnnouncementTable = ({ data }: AnnouncementsTableProps) => {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -16,12 +16,11 @@ const NoticeTable = ({ data }: NoticeTableProps) => {
         </TableHead>
         <TableBody>
           {data.map((row) => (
-            <TableRowWrap index={row.index} date={row.date} contents={row.contents} title={row.title} id={row.id} />
+            <AnnouncementTableRow index={row.index} date={row.date} url={row.url} title={row.title} id={row.id} />
           ))}
         </TableBody>
       </Table>
     </TableContainer>
   );
 };
-
-export default NoticeTable;
+export default AnnouncementTable;
