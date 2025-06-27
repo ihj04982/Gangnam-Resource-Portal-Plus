@@ -32,9 +32,7 @@ const App = () => {
           </Route>
           <Route path="freedisposal" element={<FreeDisposalPage />} />
           <Route path="locations" element={<LocationPage />} />
-          <Route path="/clean" element={<CleanMainPage />} >
-            
-          </Route>
+          <Route path="/clean" element={<CleanMainPage />}></Route>
         </Route>
       </Routes>
     </Suspense>

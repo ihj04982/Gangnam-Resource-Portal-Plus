@@ -1,11 +1,6 @@
 import { Box, Fade } from '@mui/material';
-import { Sidebar, Menu, MenuItem, useProSidebar, SubMenu } from 'react-pro-sidebar';
+import { Sidebar, Menu, MenuItem, useProSidebar } from 'react-pro-sidebar';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import ArticleIcon from '@mui/icons-material/Article';
-import FolderSharedIcon from '@mui/icons-material/FolderShared';
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 
 export default function PhoneMenu() {
   const { collapseSidebar, collapsed } = useProSidebar();
@@ -26,7 +21,7 @@ export default function PhoneMenu() {
               <Fade in={!collapsed} timeout={1200}>
                 <Box
                   sx={{
-                    height: 170,
+                    // height: 170,
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
@@ -36,24 +31,94 @@ export default function PhoneMenu() {
                   <Box
                     sx={{
                       color: 'black',
-                      mt: 2,
+                      mt: 1,
                     }}
                   >
-                    Ellie010707
+                    생활쓰레기 처리절차
                   </Box>
                   <Box
                     sx={{
-                      color: 'gray',
+                      color: 'black',
                       mt: 1,
-                      fontSize: 12,
                     }}
                   >
-                    doris0707@naver.com
+                    재활용 분리배출{' '}
+                  </Box>
+                  <Box
+                    sx={{
+                      color: 'black',
+                      mt: 1,
+                    }}
+                  >
+                    투명페트병 분리배출
+                  </Box>
+                  <Box
+                    sx={{
+                      color: 'black',
+                      mt: 1,
+                    }}
+                  >
+                    보호수
+                  </Box>
+                  <Box
+                    sx={{
+                      color: 'black',
+                      mt: 1,
+                    }}
+                  >
+                    지정 약수터
+                  </Box>
+                  <Box
+                    sx={{
+                      color: 'black',
+                      mt: 1,
+                    }}
+                  >
+                    환경지도 점검 내역
+                  </Box>
+                  <Box
+                    sx={{
+                      color: 'black',
+                      mt: 1,
+                    }}
+                  >
+                    강남 행사 공지
+                  </Box>
+                  <Box
+                    sx={{
+                      color: 'black',
+                      mt: 1,
+                    }}
+                  >
+                    플로깅
+                  </Box>
+                  <Box
+                    sx={{
+                      color: 'black',
+                      mt: 1,
+                    }}
+                  >
+                    사업장 폐기물 신고
+                  </Box>
+                  <Box
+                    sx={{
+                      color: 'black',
+                      mt: 1,
+                    }}
+                  >
+                    자원순환 통계
+                  </Box>
+                  <Box
+                    sx={{
+                      color: 'black',
+                      mt: 1,
+                    }}
+                  >
+                    일반민원
                   </Box>
                 </Box>
               </Fade>
             )}
-            
           </Menu>
         </Sidebar>
       </Box>

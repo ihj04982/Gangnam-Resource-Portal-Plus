@@ -35,8 +35,7 @@ const CircleDivStyle = styled('div')`
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s;
 
-  @media (max-width : 380px) {
-
+  @media (max-width: 380px) {
   }
 `;
 
@@ -100,11 +99,10 @@ const CircleMenu = () => {
             position: 'fixed',
             top: 0,
             left: 0,
-            width: '100vw',
-            height: '100vh',
+            width: '100dvw',
+            height: '100dvh',
             objectFit: 'cover',
             zIndex: -1,
-            
           }}
         >
           <source src="/contents/SSYouTube.online_(무료영상)하늘_1080p.mp4" type="video/mp4" />
