@@ -7,6 +7,7 @@ import FaqPage from './pages/NoticePage/FaqPage';
 import FaqDetail from './pages/NoticePage/FaqDetail';
 import AnnouncementsDetail from './pages/NoticePage/AnnouncementsDetail';
 import FreeDisposalPage from './pages/FreeDisposalPage/FreeDisposalPage';
+import CircleMenu from './pages/CleanPage/practice/CircleMenu';
 
 const AppLayout = React.lazy(() => import('./layout/AppLayout'));
 const LocationPage = React.lazy(() => import('./pages/LocationPage/LocationPage'));
@@ -30,6 +31,7 @@ const App = () => {
           </Route>
           <Route path="freedisposal" element={<FreeDisposalPage />} />
           <Route path="locations" element={<LocationPage />} />
+          <Route path="/practice" element={<CircleMenu />} />
         </Route>
       </Routes>
     </Suspense>
