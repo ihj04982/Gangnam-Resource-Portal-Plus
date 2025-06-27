@@ -1,16 +1,17 @@
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { useEffect, useState } from 'react';
 import { doc, getDoc } from 'firebase/firestore';
-import { Container, Typography, Paper, Box } from '@mui/material';
+import { Container, Typography, Paper, Box, CircularProgress } from '@mui/material';
 import { db } from '../../firebaseConfig';
 import type { FaqItem } from '../../models/notice';
+import NoticeReturnButton from './components/NoticeReturnButton';
 
 const FaqDetail = () => {
   const { id } = useParams<{ id: string }>(); // URL에서 문서 ID를 id로 가져옵니다.
   const [faq, setFaq] = useState<FaqItem | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchFaqDetail = async () => {
       if (!id) {
@@ -46,9 +47,9 @@ const FaqDetail = () => {
 
   if (loading) {
     return (
-      <Container maxWidth="md">
-        <Typography>FAQ를 불러오는 중...</Typography>
-      </Container>
+      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        <CircularProgress />
+      </Box>
     );
   }
 
@@ -67,7 +68,9 @@ const FaqDetail = () => {
       </Container>
     );
   }
-
+  const handleGoBackToList = () => {
+    navigate('/notice/faq'); // 공지사항 목록 페이지의 경로로 변경하세요.
+  };
   return (
     <Container maxWidth="md">
       <Paper elevation={3} sx={{ p: 4, mb: 4 }}>
@@ -88,7 +91,8 @@ const FaqDetail = () => {
               </Typography>
             ),
           )}
-        </Box>
+        </Box>{' '}
+        <NoticeReturnButton onClick={handleGoBackToList} />
       </Paper>
     </Container>
   );

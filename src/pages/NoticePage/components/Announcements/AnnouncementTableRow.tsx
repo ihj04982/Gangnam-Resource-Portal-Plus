@@ -10,12 +10,18 @@ const AnnouncementTableRow = ({ id, index, title, date }: AnnouncementsItem) => 
         nav(`/notice/announcements/${id}`);
       }}
       key={id}
-      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+      sx={{
+        '&:last-child td, &:last-child th': { border: 0 },
+        '&:hover': {
+          bgcolor: 'secondary.main',
+          color: 'text.primary',
+        },
+      }}
     >
       <TableCell component="th" scope="row">
         {index}
       </TableCell>
-      <TableCell>{title}</TableCell>
+      <TableCell sx={{ wordBreak: 'keep-all' }}>{title}</TableCell>
       <TableCell>{date}</TableCell>
     </TableRow>
   );
