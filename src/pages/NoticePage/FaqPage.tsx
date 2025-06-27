@@ -93,7 +93,13 @@ const FaqPage = () => {
         <>
           <FaqTable data={currentFaqs} /> {/* 현재 페이지의 FAQ만 렌더링합니다. */}
           <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
-            <Pagination count={totalPages} page={currentPage} onChange={handlePageChange} color="primary" />
+            <Pagination
+              sx={{ my: '1rem' }}
+              count={totalPages}
+              page={currentPage}
+              onChange={handlePageChange}
+              color="primary"
+            />
           </Box>
         </>
       ) : (

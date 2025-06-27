@@ -32,7 +32,7 @@ const AnnouncementTableRow = ({ id, index, title, date }: AnnouncementsItem) => 
         {index}
       </TableCell>
       <TableCell sx={{ wordBreak: 'keep-all', flexGrow: 1 }}>{truncateTitle(title, 45)}</TableCell>
-      <TableCell>{date}</TableCell>
+      <TableCell sx={{ display: { xs: 'none', sm: 'none', md: 'block' } }}>{date}</TableCell>
     </TableRow>
   );
 };
