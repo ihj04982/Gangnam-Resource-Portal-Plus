@@ -67,28 +67,6 @@ const getBannerTitle = () => {
       return 'FAQ';
     case '/clean':
       return '생활쓰레기 처리절차';
-    case '/clean':
-      return '생활쓰레기 처리절차';
-    case '/clean':
-      return '생활쓰레기 처리절차';
-    case '/clean':
-      return '생활쓰레기 처리절차';
-    case '/clean':
-      return '생활쓰레기 처리절차';
-    case '/clean':
-      return '생활쓰레기 처리절차';
-    case '/clean':
-      return '생활쓰레기 처리절차';
-    case '/clean':
-      return '생활쓰레기 처리절차';
-    case '/clean':
-      return '생활쓰레기 처리절차';
-    case '/clean':
-      return '생활쓰레기 처리절차';
-    case '/clean':
-      return '생활쓰레기 처리절차';
-    case '/clean':
-      return '생활쓰레기 처리절차';
     default:
       return '';
   }
@@ -106,31 +84,6 @@ const getBreadcrumb = () => {
       return '게시판 > FAQ';
     case '/clean':
       return '청소정보 > 생활쓰레기 처리절차';
-    case '/clean':
-      return '청소정보 > 생활쓰레기 처리절차';
-    case '/clean':
-      return '청소정보 > 생활쓰레기 처리절차';
-    case '/clean':
-      return '청소정보 > 생활쓰레기 처리절차';
-    case '/clean':
-      return '청소정보 > 생활쓰레기 처리절차';
-    case '/clean':
-      return '청소정보 > 생활쓰레기 처리절차';
-    case '/clean':
-      return '청소정보 > 생활쓰레기 처리절차';
-    case '/clean':
-      return '청소정보 > 생활쓰레기 처리절차';
-    case '/clean':
-      return '청소정보 > 생활쓰레기 처리절차';
-    case '/clean':
-      return '청소정보 > 생활쓰레기 처리절차';
-    case '/clean':
-      return '청소정보 > 생활쓰레기 처리절차';
-    case '/clean':
-      return '청소정보 > 생활쓰레기 처리절차';
-    case '/clean':
-      return '청소정보 > 생활쓰레기 처리절차';
-
     default:
       return '';
   }
@@ -146,10 +99,11 @@ const Content = styled('div')({
 });
 
 const Sidebar = styled('aside')({
-  width: '240px',
+  width: '280px',
   display: 'flex',
   flexDirection: 'column',
   backgroundColor: '#fff',
+  paddingLeft: '12px',
 });
 
 const SidebarTitle = styled('div')({
@@ -164,7 +118,6 @@ const SidebarTitle = styled('div')({
 const SidebarMenu = styled('nav')({
   display: 'flex',
   flexDirection: 'column',
-  borderRight: '1px solid #ddd',
 });
 
 const MenuItem = styled('div')({
