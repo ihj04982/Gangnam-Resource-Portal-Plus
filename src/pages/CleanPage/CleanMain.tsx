@@ -1,14 +1,24 @@
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography } from '@mui/material';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Typography,
+  Box,
+} from '@mui/material';
 import './style/ResponsiveTable.css';
-import { Card, CardContent, Grid, Box } from '@mui/material';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import React from 'react';
+// import { Card, CardContent, Grid, Box } from '@mui/material';
+// import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+// import React from 'react';
 
-const garbageFlow = [
-  { title: '일반쓰레기 배출', desc: '가정 · 영업장' },
-  { title: '쓰레기 회수', desc: '수거업체 수거' },
-  { title: '처리', desc: '강남 자원처리시설(소각)\n인천 수도권매립지(매립)' },
-];
+// const garbageFlow = [
+//   { title: '일반쓰레기 배출', desc: '가정 · 영업장' },
+//   { title: '쓰레기 회수', desc: '수거업체 수거' },
+//   { title: '처리', desc: '강남 자원처리시설(소각)\n인천 수도권매립지(매립)' },
+// ];
 const schedule = [
   { type: '종량제', mon: '○', tue: '○', wed: '○', thu: '○', fri: '○', sat: '×', sun: '○' },
   { type: '음식물', mon: '○', tue: '○', wed: '○', thu: '○', fri: '○', sat: '×', sun: '○' },
@@ -161,30 +171,6 @@ const CleanMain = () => {
         <Typography variant="subtitle1" gutterBottom>
           일반쓰레기 처리 절차
         </Typography>
-
-        <Grid container spacing={2} alignItems="center" justifyContent="center" flexWrap="wrap">
-          {garbageFlow.map((step, idx) => (
-            <React.Fragment key={idx}>
-              <Grid item xs={12} sm={3}>
-                <Card sx={{ backgroundColor: '#f5f5f5' }}>
-                  <CardContent>
-                    <Typography variant="subtitle2" fontWeight="bold">
-                      {step.title}
-                    </Typography>
-                    <Typography variant="body2" sx={{ whiteSpace: 'pre-line' }}>
-                      {step.desc}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-              {idx < garbageFlow.length - 1 && (
-                <Grid item xs="auto">
-                  <ArrowForwardIcon fontSize="large" />
-                </Grid>
-              )}
-            </React.Fragment>
-          ))}
-        </Grid>
       </Box>
     </>
   );
