@@ -146,19 +146,19 @@ const LocationPage = () => {
             <IconBox>
               <LightbulbIcon fontSize="large" />
             </IconBox>
-            <SidebarButtonText>형광등 수거함</SidebarButtonText>
+            <SidebarButtonText>폐형광등 폐건전지</SidebarButtonText>
           </SidebarGridButton>
           <SidebarGridButton onClick={() => setSelectedType('wasteBag')}>
             <IconBox>
               <DeleteIcon fontSize="large" />
             </IconBox>
-            <SidebarButtonText>쓰레기통</SidebarButtonText>
+            <SidebarButtonText>쓰레기봉투 판매처</SidebarButtonText>
           </SidebarGridButton>
           <SidebarGridButton onClick={() => setSelectedType('cigaretteButt')}>
             <IconBox>
               <SmokingRoomsIcon fontSize="large" />
             </IconBox>
-            <SidebarButtonText>담배꽁초</SidebarButtonText>
+            <SidebarButtonText>담배꽁초 수거함</SidebarButtonText>
           </SidebarGridButton>
           <SidebarGridButton onClick={() => setSelectedType('clothingCollection')}>
             <IconBox>
