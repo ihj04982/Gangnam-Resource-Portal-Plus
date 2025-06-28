@@ -1,12 +1,13 @@
 import { Outlet, useNavigate } from 'react-router';
 import { styled } from '@mui/material/styles';
-import { Box, IconButton, Typography } from '@mui/material';
+import { Box, Drawer, IconButton, List, ListItemButton, ListItemText, Typography } from '@mui/material';
 import { useLocation } from 'react-router';
 import HomeIcon from '@mui/icons-material/Home';
 import MenuIcon from '@mui/icons-material/Menu';
 import gangnamLogo from '../images/gangnam-gu-logo-crop.png';
 import gangnamLogoMain from '../images/gangnam-gu-logo-main.png';
 import largeWasteBanner from '../images/large-waste-banner.png';
+import { useState } from 'react';
 
 const Layout = styled('div')({
   display: 'flex',
@@ -16,18 +17,25 @@ const Layout = styled('div')({
   minHeight: '100vh',
 });
 
-const Header = styled('div')(() => ({
+const Header = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
+  justifyContent: 'space-between',
   height: '60px',
   padding: '0 16px',
   width: '100%',
   boxSizing: 'border-box',
   backgroundColor: '#ffffff',
   color: '#000000',
+
+  [theme.breakpoints.down('sm')]: {
+    flexWrap: 'wrap',
+    height: 'auto',
+    padding: '8px',
+  },
 }));
 
-const NavMenu = styled('div')(() => ({
+const NavMenu = styled('div')(({ theme }) => ({
   display: 'flex',
   gap: '32px',
   alignItems: 'center',
@@ -35,12 +43,20 @@ const NavMenu = styled('div')(() => ({
   justifyContent: 'center',
   fontWeight: 500,
   fontSize: 16,
+
+  [theme.breakpoints.down('sm')]: {
+    display: 'none',
+  },
 }));
 
-const RightMenu = styled('div')(() => ({
+const RightMenu = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   gap: '12px',
+
+  [theme.breakpoints.up('md')]: {
+    display: 'none',
+  },
 }));
 
 const Banner = styled('div')({
@@ -65,6 +81,30 @@ const getBannerTitle = () => {
       return '공지사항';
     case '/notice/faq':
       return 'FAQ';
+    case '/clean':
+      return '생활쓰레기 처리절차';
+    case '/clean/recycle':
+      return '재활용 분리배출';
+    case '/clean/pet':
+      return '투명페트병 분리배출';
+    case '/clean/sewage':
+      return '정화조청소';
+    case '/clean/coffee-ground':
+      return '커피박 수거';
+    case '/clean/gn-recycle-center':
+      return '재활용정거장 지원 사업';
+    case '/clean/biz-trash':
+      return '사업장 폐기물 신고';
+    case '/clean/gn-civil':
+      return '청소대행업체 현황';
+    case '/clean/trash':
+      return '강남 환경자원센터';
+    case '/clean/gn-env-re-center':
+      return '강남 자원회수시설';
+    case '/clean/recycle-statistics':
+      return '자원순환통계';
+    case '/clean/gn-request':
+      return '일반민원';
     default:
       return '';
   }
@@ -80,6 +120,30 @@ const getBreadcrumb = () => {
       return '게시판 > 공지사항';
     case '/notice/faq':
       return '게시판 > FAQ';
+    case '/clean':
+      return '청소정보 > 생활쓰레기 처리절차';
+    case '/clean/recycle':
+      return '청소정보 > 재활용 분리배출';
+    case '/clean/pet':
+      return '청소정보 > 투명페트병 분리배출';
+    case '/clean/sewage':
+      return '청소정보 > 정화조청소';
+    case '/clean/coffee-ground':
+      return '청소정보 > 커피박 수거';
+    case '/clean/gn-recycle-center':
+      return '청소정보 > 재활용정거장 지원 사업';
+    case '/clean/biz-trash':
+      return '청소정보 > 사업장 폐기물 신고';
+    case '/clean/gn-civil':
+      return '청소정보 > 청소대행업체 현황';
+    case '/clean/trash':
+      return '청소정보 > 강남 환경자원센터';
+    case '/clean/gn-env-re-center':
+      return '청소정보 > 강남 자원회수시설';
+    case '/clean/recycle-statistics':
+      return '청소정보 > 자원순환통계';
+    case '/clean/gn-request':
+      return '청소정보 > 일반민원';
     default:
       return '';
   }
@@ -94,12 +158,17 @@ const Content = styled('div')({
   flexGrow: 1,
 });
 
-const Sidebar = styled('aside')({
-  width: '240px',
+const Sidebar = styled('aside')(({ theme }) => ({
+  width: '280px',
   display: 'flex',
   flexDirection: 'column',
   backgroundColor: '#fff',
-});
+  paddingLeft: '12px',
+
+  [theme.breakpoints.down('sm')]: {
+    display: 'none',
+  },
+}));
 
 const SidebarTitle = styled('div')({
   backgroundColor: '#137a1f', // 진한 초록색
@@ -113,7 +182,6 @@ const SidebarTitle = styled('div')({
 const SidebarMenu = styled('nav')({
   display: 'flex',
   flexDirection: 'column',
-  borderRight: '1px solid #ddd',
 });
 
 const MenuItem = styled('div')({
@@ -150,6 +218,7 @@ const Footer = styled('div')(() => ({
 const AppLayout = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const isLocationPage = location.pathname === '/locations';
 
@@ -169,10 +238,7 @@ const AppLayout = () => {
           <Typography sx={{ fontWeight: 'bold', px: 1, cursor: 'pointer' }} onClick={() => navigate('/largewaste')}>
             대형생활폐기물
           </Typography>
-          <Typography
-            sx={{ fontWeight: 'bold', px: 1, cursor: 'pointer' }}
-            onClick={() => alert('청소정보 페이지는 아직 연결 안 됨')}
-          >
+          <Typography sx={{ fontWeight: 'bold', px: 1, cursor: 'pointer' }} onClick={() => navigate('/clean')}>
             청소정보
           </Typography>
           <Typography sx={{ fontWeight: 'bold', px: 1, cursor: 'pointer' }} onClick={() => navigate('/notice')}>
@@ -181,6 +247,7 @@ const AppLayout = () => {
         </NavMenu>
         <RightMenu>
           <IconButton
+            onClick={() => setDrawerOpen(true)}
             sx={{
               color: '#4caf50', // 아이콘 색상 초록
               borderRadius: 0, // hover 시 사각형
@@ -192,6 +259,42 @@ const AppLayout = () => {
             <MenuIcon />
           </IconButton>
         </RightMenu>
+        <Drawer anchor="left" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+          <List sx={{ width: 250 }}>
+            <ListItemButton
+              onClick={() => {
+                navigate('/locations');
+                setDrawerOpen(false);
+              }}
+            >
+              <ListItemText primary="위치정보" />
+            </ListItemButton>
+            <ListItemButton
+              onClick={() => {
+                navigate('/largewaste');
+                setDrawerOpen(false);
+              }}
+            >
+              <ListItemText primary="대형생활폐기물" />
+            </ListItemButton>
+            <ListItemButton
+              onClick={() => {
+                navigate('/clean');
+                setDrawerOpen(false);
+              }}
+            >
+              <ListItemText primary="청소정보" />
+            </ListItemButton>
+            <ListItemButton
+              onClick={() => {
+                navigate('/notice');
+                setDrawerOpen(false);
+              }}
+            >
+              <ListItemText primary="FAQ·공지사항" />
+            </ListItemButton>
+          </List>
+        </Drawer>
       </Header>
       {!isLocationPage && (
         <Banner>
@@ -251,6 +354,85 @@ const AppLayout = () => {
                 </SidebarMenu>
               </>
             )}
+            {location.pathname.startsWith('/clean') && (
+              <>
+                <SidebarTitle>청소 정보</SidebarTitle>
+                <SidebarMenu>
+                  <MenuItem
+                    className={location.pathname.startsWith('/clean') ? 'active' : ''}
+                    onClick={() => navigate('/clean')}
+                  >
+                    생활쓰레기 처리절차
+                  </MenuItem>
+                  <MenuItem
+                    className={location.pathname.startsWith('/clean/recycle') ? 'active' : ''}
+                    onClick={() => navigate('/clean/recycle')}
+                  >
+                    재활용 분리배출
+                  </MenuItem>
+                  <MenuItem
+                    className={location.pathname.startsWith('/clean/pet') ? 'active' : ''}
+                    onClick={() => navigate('/clean/pet')}
+                  >
+                    투명페트병 분리배출
+                  </MenuItem>
+                  <MenuItem
+                    className={location.pathname.startsWith('/clean/sewage') ? 'active' : ''}
+                    onClick={() => navigate('/clean/sewage')}
+                  >
+                    정화조청소
+                  </MenuItem>
+                  <MenuItem
+                    className={location.pathname.startsWith('/clean/coffee-ground') ? 'active' : ''}
+                    onClick={() => navigate('/clean/coffee-ground')}
+                  >
+                    커피박 수거
+                  </MenuItem>
+                  <MenuItem
+                    className={location.pathname.startsWith('/clean/gn-recycle-center') ? 'active' : ''}
+                    onClick={() => navigate('/clean/gn-recycle-center')}
+                  >
+                    재활용정거장 지원 사업
+                  </MenuItem>
+                  <MenuItem
+                    className={location.pathname.startsWith('/clean/biz-trash') ? 'active' : ''}
+                    onClick={() => navigate('/clean/biz-trash')}
+                  >
+                    사업장 폐기물 신고
+                  </MenuItem>
+                  <MenuItem
+                    className={location.pathname.startsWith('/clean/gn-civil') ? 'active' : ''}
+                    onClick={() => navigate('/clean/gn-civil')}
+                  >
+                    청소대행업체 현황
+                  </MenuItem>
+                  <MenuItem
+                    className={location.pathname.startsWith('/clean/trash') ? 'active' : ''}
+                    onClick={() => navigate('/clean/trash')}
+                  >
+                    강남 환경자원센터
+                  </MenuItem>
+                  <MenuItem
+                    className={location.pathname.startsWith('/clean/gn-env-re-center') ? 'active' : ''}
+                    onClick={() => navigate('/clean/gn-env-re-center')}
+                  >
+                    강남 자원회수시설
+                  </MenuItem>
+                  <MenuItem
+                    className={location.pathname.startsWith('/clean/recycle-statistics') ? 'active' : ''}
+                    onClick={() => navigate('/clean/recycle-statistics')}
+                  >
+                    자원순환통계
+                  </MenuItem>
+                  <MenuItem
+                    className={location.pathname.startsWith('/clean/gn-request') ? 'active' : ''}
+                    onClick={() => navigate('/clean/gn-request')}
+                  >
+                    일반민원
+                  </MenuItem>
+                </SidebarMenu>
+              </>
+            )}
           </Sidebar>
         )}
 
@@ -291,7 +473,21 @@ const AppLayout = () => {
           {/* 오른쪽 강남구청 홈페이지 */}
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
             <HomeIcon fontSize="small" />
-            <Typography variant="caption">강남구청 홈페이지</Typography>
+            <Typography
+              component="a"
+              href="https://www.gangnam.go.kr/main.do"
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="caption"
+              sx={{
+                textDecoration: 'none',
+                color: 'inherit',
+                '&:hover': { textDecoration: 'underline' },
+                cursor: 'pointer',
+              }}
+            >
+              강남구청 홈페이지
+            </Typography>
           </Box>
         </Box>
       </Footer>

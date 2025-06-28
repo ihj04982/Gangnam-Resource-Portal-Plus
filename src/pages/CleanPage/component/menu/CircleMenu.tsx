@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { styled } from '@mui/material';
 // 메뉴 아이디어 청소 인데 ......
 // 1. 보호수 api
-// 2. 지정 약수터 api
+// 2. 지정 약수터 api 플로깅과 엮고 
 // 3. 환경지도 점검 내역 api
 // 4. 강남 행사 공지 api
 // 5. 플로깅 db 구현

@@ -1,4 +1,4 @@
-import { Container, Typography, Box } from '@mui/material';
+import { Container, Typography, Box, CircularProgress } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 import { useEffect, useState } from 'react';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
@@ -76,7 +76,11 @@ const AnnouncementsPage = () => {
   };
 
   if (loading) {
-    return <div>데이터를 불러오는 중...</div>;
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        <CircularProgress />
+      </Box>
+    );
   }
 
   if (error) {
@@ -98,7 +102,7 @@ const AnnouncementsPage = () => {
   }
 
   return (
-    <Container maxWidth="md" sx={{ my: '2rem' }}>
+    <Container maxWidth="md" sx={{ my: '2rem', padding: 0 }}>
       <Typography variant="h6" textAlign="center" sx={{ mb: 4 }}>
         공지사항
       </Typography>
