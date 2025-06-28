@@ -2,6 +2,7 @@ import useFluorescentBattery from '../../hooks/useFluorescentBattery';
 import useWasteBag from '../../hooks/useWasteBag';
 import useCigaretteButt from '../../hooks/useCigaretteButt';
 import useClothingCollection from '../../hooks/useClothingCollection';
+import NaverMap from './component/NaverMap';
 
 const LocationPage = () => {
   const { data: fluorescent, isLoading: isLoadingFluorescent, error: errorFluorescent } = useFluorescentBattery();
@@ -21,12 +22,36 @@ const LocationPage = () => {
     return <div>Error occurred!</div>;
   }
 
-  console.log('Fluorescent Battery:', fluorescent);
-  console.log('Waste Bag:', wasteBag);
-  console.log('Cigarette Butt:', cigaretteButt);
-  console.log('Clothing Collection:', clothingCollection);
+  const fluorescentLocations =
+    fluorescent?.map((item) => ({
+      address: item.설치위치,
+      label: item.동명,
+    })) || [];
 
-  return <div>{123}</div>;
+  const wasteBagLocations =
+    wasteBag?.map((item) => ({
+      address: item.주소,
+      label: item.판매처명,
+    })) || [];
+
+  const cigaretteButtLocations =
+    cigaretteButt?.map((item) => ({
+      address: item['위 치'] || item.설치주소,
+      label: item.설치주소,
+    })) || [];
+
+  return (
+    <div>
+      {clothingCollection && (
+        <NaverMap
+          clothingCollection={clothingCollection}
+          fluorescentLocations={fluorescentLocations}
+          wasteBagLocations={wasteBagLocations}
+          cigaretteButtLocations={cigaretteButtLocations}
+        />
+      )}
+    </div>
+  );
 };
 
 export default LocationPage;
