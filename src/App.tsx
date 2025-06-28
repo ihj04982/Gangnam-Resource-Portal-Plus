@@ -7,7 +7,6 @@ import FaqPage from './pages/NoticePage/FaqPage';
 import FaqDetail from './pages/NoticePage/FaqDetail';
 import AnnouncementsDetail from './pages/NoticePage/AnnouncementsDetail';
 import FreeDisposalPage from './pages/FreeDisposalPage/FreeDisposalPage';
-import CleanMainPage from './pages/CleanPage/CleanMainPage';
 import CleanMain from './pages/CleanPage/CleanMain';
 import Trash from './pages/CleanPage/component/Trash';
 import Sewage from './pages/CleanPage/component/Sewage';
