@@ -1,0 +1,49 @@
+@media all and (max-width: 800px) {
+  .mTable caption {
+    font-size: 1.3em;
+  }
+
+  .mTable {
+    border: 0;
+  }
+
+  .mTable thead {
+    border: none;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+
+  .mTable th {
+    display: block;
+  }
+
+  .mTable tr {
+    border-top: 3px solid gray;
+    border-bottom: 3px solid #ddd;
+    display: block;
+    margin-bottom: 0.625em;
+  }
+
+  .mTable td {
+    border-bottom: 1px solid #ddd;
+    display: block;
+    font-size: 0.8em;
+    text-align: right;
+  }
+
+  .mTable td::before {
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  .mTable td:last-child {
+    border-bottom: 0;
+  }
+}

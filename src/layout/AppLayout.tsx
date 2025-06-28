@@ -67,28 +67,28 @@ const getBannerTitle = () => {
       return 'FAQ';
     case '/clean':
       return '생활쓰레기 처리절차';
-    case '/clean':
-      return '생활쓰레기 처리절차';
-    case '/clean':
-      return '생활쓰레기 처리절차';
-    case '/clean':
-      return '생활쓰레기 처리절차';
-    case '/clean':
-      return '생활쓰레기 처리절차';
-    case '/clean':
-      return '생활쓰레기 처리절차';
-    case '/clean':
-      return '생활쓰레기 처리절차';
-    case '/clean':
-      return '생활쓰레기 처리절차';
-    case '/clean':
-      return '생활쓰레기 처리절차';
-    case '/clean':
-      return '생활쓰레기 처리절차';
-    case '/clean':
-      return '생활쓰레기 처리절차';
-    case '/clean':
-      return '생활쓰레기 처리절차';
+    case '/clean/recycle':
+      return '재활용 분리배출';
+    case '/clean/pet':
+      return '투명페트병 분리배출';
+    case '/clean/sewage':
+      return '정화조청소';
+    case '/clean/coffee-ground':
+      return '커피박 수거';
+    case '/clean/gn-recycle-center':
+      return '재활용정거장 지원 사업';
+    case '/clean/biz-trash':
+      return '사업장 폐기물 신고';
+    case '/clean/gn-civil':
+      return '청소대행업체 현황';
+    case '/clean/trash':
+      return '강남 환경자원센터';
+    case '/clean/gn-env-re-center':
+      return '강남 자원회수시설';
+    case '/clean/recycle-statistics':
+      return '자원순환통계';
+    case '/clean/gn-request':
+      return '일반민원';
     default:
       return '';
   }
@@ -106,31 +106,28 @@ const getBreadcrumb = () => {
       return '게시판 > FAQ';
     case '/clean':
       return '청소정보 > 생활쓰레기 처리절차';
-    case '/clean':
-      return '청소정보 > 생활쓰레기 처리절차';
-    case '/clean':
-      return '청소정보 > 생활쓰레기 처리절차';
-    case '/clean':
-      return '청소정보 > 생활쓰레기 처리절차';
-    case '/clean':
-      return '청소정보 > 생활쓰레기 처리절차';
-    case '/clean':
-      return '청소정보 > 생활쓰레기 처리절차';
-    case '/clean':
-      return '청소정보 > 생활쓰레기 처리절차';
-    case '/clean':
-      return '청소정보 > 생활쓰레기 처리절차';
-    case '/clean':
-      return '청소정보 > 생활쓰레기 처리절차';
-    case '/clean':
-      return '청소정보 > 생활쓰레기 처리절차';
-    case '/clean':
-      return '청소정보 > 생활쓰레기 처리절차';
-    case '/clean':
-      return '청소정보 > 생활쓰레기 처리절차';
-    case '/clean':
-      return '청소정보 > 생활쓰레기 처리절차';
-
+    case '/clean/recycle':
+      return '청소정보 > 재활용 분리배출';
+    case '/clean/pet':
+      return '청소정보 > 투명페트병 분리배출';
+    case '/clean/sewage':
+      return '청소정보 > 정화조청소';
+    case '/clean/coffee-ground':
+      return '청소정보 > 커피박 수거';
+    case '/clean/gn-recycle-center':
+      return '청소정보 > 재활용정거장 지원 사업';
+    case '/clean/biz-trash':
+      return '청소정보 > 사업장 폐기물 신고';
+    case '/clean/gn-civil':
+      return '청소정보 > 청소대행업체 현황';
+    case '/clean/trash':
+      return '청소정보 > 강남 환경자원센터';
+    case '/clean/gn-env-re-center':
+      return '청소정보 > 강남 자원회수시설';
+    case '/clean/recycle-statistics':
+      return '청소정보 > 자원순환통계';
+    case '/clean/gn-request':
+      return '청소정보 > 일반민원';
     default:
       return '';
   }
