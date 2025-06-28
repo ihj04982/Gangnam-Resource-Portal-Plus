@@ -1,12 +1,13 @@
 import { Outlet, useNavigate } from 'react-router';
 import { styled } from '@mui/material/styles';
-import { Box, IconButton, Typography } from '@mui/material';
+import { Box, Drawer, IconButton, List, ListItemButton, ListItemText, Typography } from '@mui/material';
 import { useLocation } from 'react-router';
 import HomeIcon from '@mui/icons-material/Home';
 import MenuIcon from '@mui/icons-material/Menu';
 import gangnamLogo from '../images/gangnam-gu-logo-crop.png';
 import gangnamLogoMain from '../images/gangnam-gu-logo-main.png';
 import largeWasteBanner from '../images/large-waste-banner.png';
+import { useState } from 'react';
 
 const Layout = styled('div')({
   display: 'flex',
@@ -16,18 +17,25 @@ const Layout = styled('div')({
   minHeight: '100vh',
 });
 
-const Header = styled('div')(() => ({
+const Header = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
+  justifyContent: 'space-between',
   height: '60px',
   padding: '0 16px',
   width: '100%',
   boxSizing: 'border-box',
   backgroundColor: '#ffffff',
   color: '#000000',
+
+  [theme.breakpoints.down('sm')]: {
+    flexWrap: 'wrap',
+    height: 'auto',
+    padding: '8px',
+  },
 }));
 
-const NavMenu = styled('div')(() => ({
+const NavMenu = styled('div')(({ theme }) => ({
   display: 'flex',
   gap: '32px',
   alignItems: 'center',
@@ -35,12 +43,20 @@ const NavMenu = styled('div')(() => ({
   justifyContent: 'center',
   fontWeight: 500,
   fontSize: 16,
+
+  [theme.breakpoints.down('sm')]: {
+    display: 'none',
+  },
 }));
 
-const RightMenu = styled('div')(() => ({
+const RightMenu = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   gap: '12px',
+
+  [theme.breakpoints.up('md')]: {
+    display: 'none',
+  },
 }));
 
 const Banner = styled('div')({
@@ -142,13 +158,17 @@ const Content = styled('div')({
   flexGrow: 1,
 });
 
-const Sidebar = styled('aside')({
+const Sidebar = styled('aside')(({ theme }) => ({
   width: '280px',
   display: 'flex',
   flexDirection: 'column',
   backgroundColor: '#fff',
   paddingLeft: '12px',
-});
+
+  [theme.breakpoints.down('sm')]: {
+    display: 'none',
+  },
+}));
 
 const SidebarTitle = styled('div')({
   backgroundColor: '#137a1f', // 진한 초록색
@@ -198,8 +218,10 @@ const Footer = styled('div')(() => ({
 const AppLayout = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const isLocationPage = location.pathname === '/locations';
+
   return (
     <Layout>
       <Header>
@@ -225,6 +247,7 @@ const AppLayout = () => {
         </NavMenu>
         <RightMenu>
           <IconButton
+            onClick={() => setDrawerOpen(true)}
             sx={{
               color: '#4caf50', // 아이콘 색상 초록
               borderRadius: 0, // hover 시 사각형
@@ -236,6 +259,42 @@ const AppLayout = () => {
             <MenuIcon />
           </IconButton>
         </RightMenu>
+        <Drawer anchor="left" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+          <List sx={{ width: 250 }}>
+            <ListItemButton
+              onClick={() => {
+                navigate('/locations');
+                setDrawerOpen(false);
+              }}
+            >
+              <ListItemText primary="위치정보" />
+            </ListItemButton>
+            <ListItemButton
+              onClick={() => {
+                navigate('/largewaste');
+                setDrawerOpen(false);
+              }}
+            >
+              <ListItemText primary="대형생활폐기물" />
+            </ListItemButton>
+            <ListItemButton
+              onClick={() => {
+                navigate('/clean');
+                setDrawerOpen(false);
+              }}
+            >
+              <ListItemText primary="청소정보" />
+            </ListItemButton>
+            <ListItemButton
+              onClick={() => {
+                navigate('/notice');
+                setDrawerOpen(false);
+              }}
+            >
+              <ListItemText primary="FAQ·공지사항" />
+            </ListItemButton>
+          </List>
+        </Drawer>
       </Header>
       {!isLocationPage && (
         <Banner>
@@ -414,7 +473,21 @@ const AppLayout = () => {
           {/* 오른쪽 강남구청 홈페이지 */}
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
             <HomeIcon fontSize="small" />
-            <Typography variant="caption">강남구청 홈페이지</Typography>
+            <Typography
+              component="a"
+              href="https://www.gangnam.go.kr/main.do"
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="caption"
+              sx={{
+                textDecoration: 'none',
+                color: 'inherit',
+                '&:hover': { textDecoration: 'underline' },
+                cursor: 'pointer',
+              }}
+            >
+              강남구청 홈페이지
+            </Typography>
           </Box>
         </Box>
       </Footer>

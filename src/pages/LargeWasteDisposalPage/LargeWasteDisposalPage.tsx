@@ -49,13 +49,15 @@ const LargeWasteDisposalPage = () => {
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            width: 600,
+            width: '100%',
+            maxWidth: '80vh',
             bgcolor: 'background.paper',
             borderRadius: 1,
             boxShadow: 24,
             display: 'flex',
             flexDirection: 'column',
             maxHeight: '80vh',
+            mx: 2,
           }}
         >
           <Box sx={{ p: 4, overflowY: 'auto' }}>
@@ -68,19 +70,23 @@ const LargeWasteDisposalPage = () => {
                 <Table size="small">
                   <TableHead>
                     <TableRow>
-                      <TableCell>종류</TableCell>
-                      <TableCell>품목</TableCell>
-                      <TableCell>규격</TableCell>
-                      <TableCell align="right">수수료(원)</TableCell>
+                      <TableCell sx={{ fontSize: 14, whiteSpace: 'nowrap', p: 0.5 }}>종류</TableCell>
+                      <TableCell sx={{ fontSize: 14, whiteSpace: 'nowrap', p: 0.5 }}>품목</TableCell>
+                      <TableCell sx={{ fontSize: 14, width: 50, whiteSpace: 'nowrap', p: 0.5 }}>규격</TableCell>
+                      <TableCell sx={{ fontSize: 14, width: 120, whiteSpace: 'nowrap', p: 0.5 }} align="right">
+                        수수료(원)
+                      </TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {gangnamFeeData.map((item, index) => (
                       <TableRow key={index}>
-                        <TableCell sx={{ fontSize: 13, whiteSpace: 'nowrap' }}>{item.대형폐기물구분명}</TableCell>
-                        <TableCell sx={{ fontSize: 13, whiteSpace: 'nowrap' }}>{item.대형폐기물명}</TableCell>
-                        <TableCell sx={{ fontSize: 13, whiteSpace: 'nowrap' }}>{item.대형폐기물규격}</TableCell>
-                        <TableCell sx={{ fontSize: 13, whiteSpace: 'nowrap' }} align="right">
+                        <TableCell sx={{ fontSize: 12, whiteSpace: 'nowrap', p: 0.5 }}>
+                          {item.대형폐기물구분명}
+                        </TableCell>
+                        <TableCell sx={{ fontSize: 12, whiteSpace: 'nowrap', p: 0.5 }}>{item.대형폐기물명}</TableCell>
+                        <TableCell sx={{ fontSize: 12, whiteSpace: 'nowrap', p: 0.5 }}>{item.대형폐기물규격}</TableCell>
+                        <TableCell sx={{ fontSize: 12, whiteSpace: 'nowrap', p: 0.5 }} align="right">
                           {Number(item.수수료).toLocaleString()}
                         </TableCell>
                       </TableRow>
