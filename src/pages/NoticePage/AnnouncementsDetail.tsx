@@ -81,9 +81,13 @@ const AnnouncementsDetail = () => {
     navigate('/notice'); // 공지사항 목록 페이지의 경로로 변경하세요.
   };
   return (
-    <Container maxWidth="md">
-      <Paper elevation={3} sx={{ p: 4, mb: 4 }}>
-        <Typography variant="h6" textAlign="center" sx={{ mb: 4, wordBreak: 'keep-all' }}>
+    <Container maxWidth="md" sx={{ padding: 0 }}>
+      <Paper elevation={3} sx={{ p: { md: 4, sm: 2, xs: 2 }, mb: 4 }}>
+        <Typography
+          variant="h6"
+          textAlign="center"
+          sx={{ mb: 4, wordBreak: 'keep-all', fontSize: { md: '1.5rem', sm: '1.2rem', xs: '1rem' } }}
+        >
           {announcement.title}
         </Typography>
         <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 2 }}>

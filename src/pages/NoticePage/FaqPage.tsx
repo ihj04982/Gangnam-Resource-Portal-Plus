@@ -88,7 +88,7 @@ const FaqPage = () => {
   }
 
   return (
-    <Container maxWidth="md" sx={{ my: '2rem' }}>
+    <Container maxWidth="md" sx={{ my: '2rem', padding: 0 }}>
       <Typography variant="h6" textAlign="center" sx={{ mb: 4 }}>
         자주 묻는 질문
       </Typography>
