@@ -1,4 +1,4 @@
-import { Container, Typography, Box } from '@mui/material'; // Box를 임포트하여 유연한 레이아웃을 만듭니다.
+import { Container, Typography, Box, CircularProgress } from '@mui/material'; // Box를 임포트하여 유연한 레이아웃을 만듭니다.
 import Pagination from '@mui/material/Pagination'; // Pagination 컴포넌트를 임포트합니다.
 import { useEffect, useState } from 'react';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
@@ -72,7 +72,11 @@ const FaqPage = () => {
   };
 
   if (loading) {
-    return <div>데이터를 불러오는 중...</div>;
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        <CircularProgress />
+      </Box>
+    );
   }
 
   if (error) {
