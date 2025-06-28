@@ -143,10 +143,11 @@ const Content = styled('div')({
 });
 
 const Sidebar = styled('aside')({
-  width: '240px',
+  width: '280px',
   display: 'flex',
   flexDirection: 'column',
   backgroundColor: '#fff',
+  paddingLeft: '12px',
 });
 
 const SidebarTitle = styled('div')({
@@ -161,7 +162,6 @@ const SidebarTitle = styled('div')({
 const SidebarMenu = styled('nav')({
   display: 'flex',
   flexDirection: 'column',
-  borderRight: '1px solid #ddd',
 });
 
 const MenuItem = styled('div')({
