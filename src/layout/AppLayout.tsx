@@ -65,6 +65,30 @@ const getBannerTitle = () => {
       return '공지사항';
     case '/notice/faq':
       return 'FAQ';
+    case '/clean':
+      return '생활쓰레기 처리절차';
+    case '/clean':
+      return '생활쓰레기 처리절차';
+    case '/clean':
+      return '생활쓰레기 처리절차';
+    case '/clean':
+      return '생활쓰레기 처리절차';
+    case '/clean':
+      return '생활쓰레기 처리절차';
+    case '/clean':
+      return '생활쓰레기 처리절차';
+    case '/clean':
+      return '생활쓰레기 처리절차';
+    case '/clean':
+      return '생활쓰레기 처리절차';
+    case '/clean':
+      return '생활쓰레기 처리절차';
+    case '/clean':
+      return '생활쓰레기 처리절차';
+    case '/clean':
+      return '생활쓰레기 처리절차';
+    case '/clean':
+      return '생활쓰레기 처리절차';
     default:
       return '';
   }
@@ -80,6 +104,33 @@ const getBreadcrumb = () => {
       return '게시판 > 공지사항';
     case '/notice/faq':
       return '게시판 > FAQ';
+    case '/clean':
+      return '청소정보 > 생활쓰레기 처리절차';
+    case '/clean':
+      return '청소정보 > 생활쓰레기 처리절차';
+    case '/clean':
+      return '청소정보 > 생활쓰레기 처리절차';
+    case '/clean':
+      return '청소정보 > 생활쓰레기 처리절차';
+    case '/clean':
+      return '청소정보 > 생활쓰레기 처리절차';
+    case '/clean':
+      return '청소정보 > 생활쓰레기 처리절차';
+    case '/clean':
+      return '청소정보 > 생활쓰레기 처리절차';
+    case '/clean':
+      return '청소정보 > 생활쓰레기 처리절차';
+    case '/clean':
+      return '청소정보 > 생활쓰레기 처리절차';
+    case '/clean':
+      return '청소정보 > 생활쓰레기 처리절차';
+    case '/clean':
+      return '청소정보 > 생활쓰레기 처리절차';
+    case '/clean':
+      return '청소정보 > 생활쓰레기 처리절차';
+    case '/clean':
+      return '청소정보 > 생활쓰레기 처리절차';
+
     default:
       return '';
   }
@@ -152,7 +203,6 @@ const AppLayout = () => {
   const location = useLocation();
 
   const isLocationPage = location.pathname === '/locations';
-
   return (
     <Layout>
       <Header>
@@ -169,10 +219,7 @@ const AppLayout = () => {
           <Typography sx={{ fontWeight: 'bold', px: 1, cursor: 'pointer' }} onClick={() => navigate('/largewaste')}>
             대형생활폐기물
           </Typography>
-          <Typography
-            sx={{ fontWeight: 'bold', px: 1, cursor: 'pointer' }}
-            onClick={() => alert('청소정보 페이지는 아직 연결 안 됨')}
-          >
+          <Typography sx={{ fontWeight: 'bold', px: 1, cursor: 'pointer' }} onClick={() => navigate('/clean')}>
             청소정보
           </Typography>
           <Typography sx={{ fontWeight: 'bold', px: 1, cursor: 'pointer' }} onClick={() => navigate('/notice')}>
@@ -247,6 +294,85 @@ const AppLayout = () => {
                     onClick={() => navigate('/notice/faq')}
                   >
                     FAQ
+                  </MenuItem>
+                </SidebarMenu>
+              </>
+            )}
+            {location.pathname.startsWith('/clean') && (
+              <>
+                <SidebarTitle>청소 정보</SidebarTitle>
+                <SidebarMenu>
+                  <MenuItem
+                    className={location.pathname.startsWith('/clean') ? 'active' : ''}
+                    onClick={() => navigate('/clean')}
+                  >
+                    생활쓰레기 처리절차
+                  </MenuItem>
+                  <MenuItem
+                    className={location.pathname.startsWith('/clean/recycle') ? 'active' : ''}
+                    onClick={() => navigate('/clean/recycle')}
+                  >
+                    재활용 분리배출
+                  </MenuItem>
+                  <MenuItem
+                    className={location.pathname.startsWith('/clean/pet') ? 'active' : ''}
+                    onClick={() => navigate('/clean/pet')}
+                  >
+                    투명페트병 분리배출
+                  </MenuItem>
+                  <MenuItem
+                    className={location.pathname.startsWith('/clean/sewage') ? 'active' : ''}
+                    onClick={() => navigate('/clean/sewage')}
+                  >
+                    정화조청소
+                  </MenuItem>
+                  <MenuItem
+                    className={location.pathname.startsWith('/clean/coffee-ground') ? 'active' : ''}
+                    onClick={() => navigate('/clean/coffee-ground')}
+                  >
+                    커피박 수거
+                  </MenuItem>
+                  <MenuItem
+                    className={location.pathname.startsWith('/clean/gn-recycle-center') ? 'active' : ''}
+                    onClick={() => navigate('/clean/gn-recycle-center')}
+                  >
+                    재활용정거장 지원 사업
+                  </MenuItem>
+                  <MenuItem
+                    className={location.pathname.startsWith('/clean/biz-trash') ? 'active' : ''}
+                    onClick={() => navigate('/clean/biz-trash')}
+                  >
+                    사업장 폐기물 신고
+                  </MenuItem>
+                  <MenuItem
+                    className={location.pathname.startsWith('/clean/gn-civil') ? 'active' : ''}
+                    onClick={() => navigate('/clean/gn-civil')}
+                  >
+                    청소대행업체 현황
+                  </MenuItem>
+                  <MenuItem
+                    className={location.pathname.startsWith('/clean/trash') ? 'active' : ''}
+                    onClick={() => navigate('/clean/trash')}
+                  >
+                    강남 환경자원센터
+                  </MenuItem>
+                  <MenuItem
+                    className={location.pathname.startsWith('/clean/gn-env-re-center') ? 'active' : ''}
+                    onClick={() => navigate('/clean/gn-env-re-center')}
+                  >
+                    강남 자원회수시설
+                  </MenuItem>
+                  <MenuItem
+                    className={location.pathname.startsWith('/clean/recycle-statistics') ? 'active' : ''}
+                    onClick={() => navigate('/clean/recycle-statistics')}
+                  >
+                    자원순환통계
+                  </MenuItem>
+                  <MenuItem
+                    className={location.pathname.startsWith('/clean/gn-request') ? 'active' : ''}
+                    onClick={() => navigate('/clean/gn-request')}
+                  >
+                    일반민원
                   </MenuItem>
                 </SidebarMenu>
               </>
