@@ -7,8 +7,8 @@ import ServiceCardTitle from './ServiceCardTitle';
 
 interface ServiceCardProps {
   icon: React.ReactNode;
-  title: string;
-  description: string;
+  title: React.ReactNode;
+  description: React.ReactNode;
   onMoreClick?: () => void;
 }
 

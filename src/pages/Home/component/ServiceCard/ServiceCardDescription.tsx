@@ -2,7 +2,7 @@ import { Typography, styled } from '@mui/material';
 import React from 'react';
 
 interface ServiceCardDescriptionProps {
-  children: string;
+  children: React.ReactNode;
 }
 
 const StyledDescription = styled(Typography)({
@@ -16,7 +16,11 @@ const StyledDescription = styled(Typography)({
 }) as typeof Typography;
 
 const ServiceCardDescription: React.FC<ServiceCardDescriptionProps> = ({ children }) => {
-  return <StyledDescription component="p" variant="body2" dangerouslySetInnerHTML={{ __html: children }} />;
+  return (
+    <StyledDescription component="p" variant="body2">
+      {children}
+    </StyledDescription>
+  );
 };
 
 export default ServiceCardDescription;
