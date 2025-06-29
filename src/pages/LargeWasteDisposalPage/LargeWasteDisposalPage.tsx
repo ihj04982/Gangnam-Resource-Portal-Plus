@@ -14,9 +14,11 @@ import {
 import { useState } from 'react';
 import { filterByRegion, type WasteFeeItem } from '../../models/large-waste';
 import feeDataRaw from '../../data/national-large-waste-fee-data.json';
+import { useNavigate } from 'react-router';
 
 const LargeWasteDisposalPage = () => {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   const feeData = (feeDataRaw as { records?: WasteFeeItem[] }).records ?? [];
   const gangnamFeeData = Array.isArray(feeData) ? filterByRegion<WasteFeeItem>(feeData, '서울특별시', '강남구') : [];
@@ -165,7 +167,12 @@ const LargeWasteDisposalPage = () => {
                   </Typography>
                   <Typography variant="body2">배출 3일 전 사전신청</Typography>
                 </div>
-                <Button variant="contained" color="success" sx={{ mt: 2 }}>
+                <Button
+                  variant="contained"
+                  color="success"
+                  sx={{ mt: 2 }}
+                  onClick={() => navigate('/largewaste/registration')}
+                >
                   수거 신청
                 </Button>
               </Box>
