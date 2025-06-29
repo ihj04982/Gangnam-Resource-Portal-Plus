@@ -1,6 +1,28 @@
-import { Box, Button, Grid, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Grid,
+  Modal,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from '@mui/material';
+import { useState } from 'react';
+import { filterByRegion, type WasteFeeItem } from '../../models/large-waste';
+import feeDataRaw from '../../data/national-large-waste-fee-data.json';
+import { useNavigate } from 'react-router';
 
 const LargeWasteDisposalPage = () => {
+  const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const feeData = (feeDataRaw as { records?: WasteFeeItem[] }).records ?? [];
+  const gangnamFeeData = Array.isArray(feeData) ? filterByRegion<WasteFeeItem>(feeData, '서울특별시', '강남구') : [];
+
   return (
     <div style={{ padding: '24px' }}>
       <Typography variant="h5" gutterBottom>
@@ -14,7 +36,7 @@ const LargeWasteDisposalPage = () => {
           폐가전제품, 이불, 가구, 사무용 자재 등 <strong>크기와 관계없이</strong> 종량제 봉투에 담을 수 없고{' '}
           <strong>분리배출 할 수 없는 폐기물</strong>
         </Typography>
-        <Button variant="contained" color="success" sx={{ mt: 2 }}>
+        <Button variant="contained" color="success" sx={{ mt: 2 }} onClick={() => setOpen(true)}>
           수거대상 물품/수수료 확인
         </Button>
         <Typography sx={{ mt: 2, fontSize: 14, color: '#555' }}>
@@ -22,6 +44,76 @@ const LargeWasteDisposalPage = () => {
           기재해 주세요.
         </Typography>
       </Box>
+      <Modal open={open} onClose={() => setOpen(false)}>
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '100%',
+            maxWidth: '80vh',
+            bgcolor: 'background.paper',
+            borderRadius: 1,
+            boxShadow: 24,
+            display: 'flex',
+            flexDirection: 'column',
+            maxHeight: '80vh',
+            mx: 2,
+          }}
+        >
+          <Box sx={{ p: 4, overflowY: 'auto' }}>
+            <Typography variant="h6" gutterBottom>
+              ▪ 대형생활폐기물 수거대상 물품/수수료
+            </Typography>
+
+            {gangnamFeeData.length > 0 ? (
+              <TableContainer sx={{ boxShadow: 'none' }}>
+                <Table size="small">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell sx={{ fontSize: 14, whiteSpace: 'nowrap', p: 0.5 }}>종류</TableCell>
+                      <TableCell sx={{ fontSize: 14, whiteSpace: 'nowrap', p: 0.5 }}>품목</TableCell>
+                      <TableCell sx={{ fontSize: 14, width: 50, whiteSpace: 'nowrap', p: 0.5 }}>규격</TableCell>
+                      <TableCell sx={{ fontSize: 14, width: 120, whiteSpace: 'nowrap', p: 0.5 }} align="right">
+                        수수료(원)
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {gangnamFeeData.map((item, index) => (
+                      <TableRow key={index}>
+                        <TableCell sx={{ fontSize: 12, whiteSpace: 'nowrap', p: 0.5 }}>
+                          {item.대형폐기물구분명}
+                        </TableCell>
+                        <TableCell sx={{ fontSize: 12, whiteSpace: 'nowrap', p: 0.5 }}>{item.대형폐기물명}</TableCell>
+                        <TableCell sx={{ fontSize: 12, whiteSpace: 'nowrap', p: 0.5 }}>{item.대형폐기물규격}</TableCell>
+                        <TableCell sx={{ fontSize: 12, whiteSpace: 'nowrap', p: 0.5 }} align="right">
+                          {Number(item.수수료).toLocaleString()}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            ) : (
+              <Typography variant="body2">데이터가 없습니다.</Typography>
+            )}
+          </Box>
+          <Box
+            sx={{
+              borderTop: '1px solid #ddd',
+              p: 2,
+              textAlign: 'center',
+            }}
+          >
+            <Button variant="contained" color="success" onClick={() => setOpen(false)}>
+              확인
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
+
       <Box sx={{ padding: '24px' }}>
         {/* 배출장소 */}
         <Typography variant="h6" gutterBottom sx={{ mt: 4 }}>
@@ -75,7 +167,12 @@ const LargeWasteDisposalPage = () => {
                   </Typography>
                   <Typography variant="body2">배출 3일 전 사전신청</Typography>
                 </div>
-                <Button variant="contained" color="success" sx={{ mt: 2 }}>
+                <Button
+                  variant="contained"
+                  color="success"
+                  sx={{ mt: 2 }}
+                  onClick={() => navigate('/largewaste/registration')}
+                >
                   수거 신청
                 </Button>
               </Box>

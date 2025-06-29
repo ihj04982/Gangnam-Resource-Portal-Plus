@@ -23,9 +23,17 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   };
 
   return (
-    <Box sx={{ my: '2rem', display: 'flex', gap: 1, justifyContent: 'center', alignItems: 'stretch' }}>
+    <Box
+      sx={{
+        display: 'flex',
+        gap: 1,
+        justifyContent: 'center',
+        alignItems: 'stretch',
+        maxWidth: '360px',
+        margin: '2rem auto',
+      }}
+    >
       <TextField
-        sx={{ width: '300px' }}
         label="제목 및 내용을 입력해주세요."
         id="outlined-size-small"
         defaultValue="Small"

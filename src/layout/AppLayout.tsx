@@ -1,12 +1,13 @@
 import { Outlet, useNavigate } from 'react-router';
 import { styled } from '@mui/material/styles';
-import { Box, IconButton, Typography } from '@mui/material';
+import { Box, Drawer, IconButton, List, ListItemButton, ListItemText, Typography } from '@mui/material';
 import { useLocation } from 'react-router';
 import HomeIcon from '@mui/icons-material/Home';
 import MenuIcon from '@mui/icons-material/Menu';
 import gangnamLogo from '../images/gangnam-gu-logo-crop.png';
 import gangnamLogoMain from '../images/gangnam-gu-logo-main.png';
 import largeWasteBanner from '../images/large-waste-banner.png';
+import { useState } from 'react';
 
 const Layout = styled('div')({
   display: 'flex',
@@ -16,18 +17,25 @@ const Layout = styled('div')({
   minHeight: '100vh',
 });
 
-const Header = styled('div')(() => ({
+const Header = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
+  justifyContent: 'space-between',
   height: '60px',
   padding: '0 16px',
   width: '100%',
   boxSizing: 'border-box',
   backgroundColor: '#ffffff',
   color: '#000000',
+
+  [theme.breakpoints.down('sm')]: {
+    flexWrap: 'wrap',
+    height: 'auto',
+    padding: '8px',
+  },
 }));
 
-const NavMenu = styled('div')(() => ({
+const NavMenu = styled('div')(({ theme }) => ({
   display: 'flex',
   gap: '32px',
   alignItems: 'center',
@@ -35,12 +43,20 @@ const NavMenu = styled('div')(() => ({
   justifyContent: 'center',
   fontWeight: 500,
   fontSize: 16,
+
+  [theme.breakpoints.down('sm')]: {
+    display: 'none',
+  },
 }));
 
-const RightMenu = styled('div')(() => ({
+const RightMenu = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   gap: '12px',
+
+  [theme.breakpoints.up('md')]: {
+    display: 'none',
+  },
 }));
 
 const Banner = styled('div')({
@@ -61,6 +77,10 @@ const getBannerTitle = () => {
       return '대형생활폐기물 안내';
     case '/largewaste/free':
       return '무상수거 안내';
+    case '/largewaste/registration':
+      return '배출 신청';
+    case '/largewaste/confirmation':
+      return '배출 신청내역 확인';
     case '/notice/announcements':
       return '공지사항';
     case '/notice/faq':
@@ -100,6 +120,10 @@ const getBreadcrumb = () => {
       return '대형생활폐기물 > 대형생활폐기물 안내';
     case '/largewaste/free':
       return '대형생활폐기물 > 무상수거 안내';
+    case '/largewaste/registration':
+      return '대형생활폐기물 > 배출 신청';
+    case '/largewaste/confirmation':
+      return '대형생활폐기물 > 배출 신청내역 확인';
     case '/notice/announcements':
       return '게시판 > 공지사항';
     case '/notice/faq':
@@ -142,12 +166,17 @@ const Content = styled('div')({
   flexGrow: 1,
 });
 
-const Sidebar = styled('aside')({
-  width: '240px',
+const Sidebar = styled('aside')(({ theme }) => ({
+  width: '280px',
   display: 'flex',
   flexDirection: 'column',
   backgroundColor: '#fff',
-});
+  paddingLeft: '12px',
+
+  [theme.breakpoints.down('sm')]: {
+    display: 'none',
+  },
+}));
 
 const SidebarTitle = styled('div')({
   backgroundColor: '#137a1f', // 진한 초록색
@@ -161,7 +190,6 @@ const SidebarTitle = styled('div')({
 const SidebarMenu = styled('nav')({
   display: 'flex',
   flexDirection: 'column',
-  borderRight: '1px solid #ddd',
 });
 
 const MenuItem = styled('div')({
@@ -198,12 +226,14 @@ const Footer = styled('div')(() => ({
 const AppLayout = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const isLocationPage = location.pathname === '/locations';
+
   return (
     <Layout>
       <Header>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, cursor: 'pointer' }} onClick={() => navigate('/')}>
           <img src={gangnamLogoMain} alt="강남구 로고" style={{ height: 60 }} />
           <Typography variant="h6" sx={{ fontWeight: 700 }}>
             자원순환 종합포털
@@ -225,6 +255,7 @@ const AppLayout = () => {
         </NavMenu>
         <RightMenu>
           <IconButton
+            onClick={() => setDrawerOpen(true)}
             sx={{
               color: '#4caf50', // 아이콘 색상 초록
               borderRadius: 0, // hover 시 사각형
@@ -236,6 +267,42 @@ const AppLayout = () => {
             <MenuIcon />
           </IconButton>
         </RightMenu>
+        <Drawer anchor="left" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+          <List sx={{ width: 250 }}>
+            <ListItemButton
+              onClick={() => {
+                navigate('/locations');
+                setDrawerOpen(false);
+              }}
+            >
+              <ListItemText primary="위치정보" />
+            </ListItemButton>
+            <ListItemButton
+              onClick={() => {
+                navigate('/largewaste');
+                setDrawerOpen(false);
+              }}
+            >
+              <ListItemText primary="대형생활폐기물" />
+            </ListItemButton>
+            <ListItemButton
+              onClick={() => {
+                navigate('/clean');
+                setDrawerOpen(false);
+              }}
+            >
+              <ListItemText primary="청소정보" />
+            </ListItemButton>
+            <ListItemButton
+              onClick={() => {
+                navigate('/notice');
+                setDrawerOpen(false);
+              }}
+            >
+              <ListItemText primary="FAQ·공지사항" />
+            </ListItemButton>
+          </List>
+        </Drawer>
       </Header>
       {!isLocationPage && (
         <Banner>
@@ -270,8 +337,18 @@ const AppLayout = () => {
                   >
                     무상수거 안내
                   </MenuItem>
-                  <MenuItem>배출 신청</MenuItem>
-                  <MenuItem>배출 신청내역 확인</MenuItem>
+                  <MenuItem
+                    className={location.pathname === '/largewaste/registration' ? 'active' : ''}
+                    onClick={() => navigate('/largewaste/registration')}
+                  >
+                    배출 신청
+                  </MenuItem>
+                  <MenuItem
+                    className={location.pathname === '/largewaste/confirmation' ? 'active' : ''}
+                    onClick={() => navigate('/largewaste/confirmation')}
+                  >
+                    배출 신청내역 확인
+                  </MenuItem>
                 </SidebarMenu>
               </>
             )}
@@ -414,7 +491,21 @@ const AppLayout = () => {
           {/* 오른쪽 강남구청 홈페이지 */}
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
             <HomeIcon fontSize="small" />
-            <Typography variant="caption">강남구청 홈페이지</Typography>
+            <Typography
+              component="a"
+              href="https://www.gangnam.go.kr/main.do"
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="caption"
+              sx={{
+                textDecoration: 'none',
+                color: 'inherit',
+                '&:hover': { textDecoration: 'underline' },
+                cursor: 'pointer',
+              }}
+            >
+              강남구청 홈페이지
+            </Typography>
           </Box>
         </Box>
       </Footer>
