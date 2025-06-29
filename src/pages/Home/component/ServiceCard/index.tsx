@@ -9,11 +9,21 @@ interface ServiceCardProps {
   icon: React.ReactNode;
   title: React.ReactNode;
   description: React.ReactNode;
-  onMoreClick?: () => void;
+  onClick?: () => void;
 }
 
 const CardContainer = styled(Box)({
   flex: 1,
+  cursor: 'pointer',
+  transition: 'all 0.3s ease',
+
+  '&:hover': {
+    transform: 'translateY(-4px)',
+
+    '& > div': {
+      backgroundColor: '#3E7800',
+    },
+  },
 });
 
 const CardContent = styled(Box)({
@@ -22,16 +32,17 @@ const CardContent = styled(Box)({
   width: '100%',
   borderRadius: '20px',
   padding: '30px 28px 45px',
+  transition: 'background-color 0.3s ease',
 });
 
-const ServiceCard: React.FC<ServiceCardProps> = ({ icon, title, description, onMoreClick }) => {
+const ServiceCard: React.FC<ServiceCardProps> = ({ icon, title, description, onClick }) => {
   return (
-    <CardContainer>
+    <CardContainer onClick={onClick}>
       <CardContent>
         <ServiceCardIcon>{icon}</ServiceCardIcon>
         <ServiceCardTitle>{title}</ServiceCardTitle>
         <ServiceCardDescription>{description}</ServiceCardDescription>
-        <ServiceCardMoreButton onClick={onMoreClick} />
+        <ServiceCardMoreButton />
       </CardContent>
     </CardContainer>
   );
