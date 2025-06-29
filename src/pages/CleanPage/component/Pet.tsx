@@ -32,7 +32,7 @@ const Pet = () => {
           • 운영현황
         </Typography>
         <TableContainer component={Paper}>
-          <Table size="small">
+          <Table size="small" className="mTable">
             <TableHead sx={{ backgroundColor: '#ddd' }}>
               <TableRow>
                 <TableCell>구분</TableCell>

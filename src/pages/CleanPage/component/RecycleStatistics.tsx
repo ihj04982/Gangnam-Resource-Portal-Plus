@@ -10,11 +10,12 @@ import {
   TableHead,
   TableRow,
   Paper,
-  // Divider, // 사용하지 않으므로 제거
+  useTheme,
+  useMediaQuery,
+  Grid,
+  Button,
 } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-
-// --- 데이터 타입을 위한 인터페이스 정의 ---
 
 interface TableRowData {
   구분: string | number;
@@ -49,13 +50,22 @@ interface TabContentData {
 
 function ResourceCirculationStatistics() {
   const [value, setValue] = useState<string>('무단투기단속');
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     event.preventDefault();
     setValue(newValue);
   };
 
-  // --- 데이터 정의 (각 탭별로) ---
+  const tabItems = [
+    { label: '무단투기단속', value: '무단투기단속' },
+    { label: '생활폐기물', value: '생활폐기물' },
+    { label: '음식물류폐기물', value: '음식물류폐기물' },
+    { label: '재활용품', value: '재활용품' },
+    { label: '종량제봉투', value: '종량제봉투' },
+    { label: '기타', value: '기타' }, // 필요시
+  ];
 
   const illegalDumpingData: TabContentData = {
     title: '무단투기단속',
@@ -281,22 +291,24 @@ function ResourceCirculationStatistics() {
     notes: [],
   };
 
-  // 테이블 렌더링 함수
   const renderTable = (data: (TableRowData | RowWithSubRows)[]) => {
     if (!data || data.length === 0) return null;
-
     const years = [2021, 2022, 2023, 2024];
 
     return (
-      <TableContainer component={Paper} sx={{ mb: 4, overflowX: 'auto' }}>
-        <Table sx={{ minWidth: 650 }} aria-label="statistics table">
+      <TableContainer component={Paper} sx={{ minWidth: isMobile ? '100%' : 650 }}>
+        <Table size={isMobile ? 'small' : 'medium'} className="mTable">
           <TableHead>
             <TableRow sx={{ backgroundColor: '#f5f5f5' }}>
-              <TableCell align="center" sx={{ fontWeight: 'bold', minWidth: 100 }}>
+              <TableCell align="center" sx={{ fontWeight: 'bold', fontSize: isMobile ? '0.75rem' : '0.9rem' }}>
                 구분
               </TableCell>
               {years.map((year) => (
-                <TableCell key={year} align="center" sx={{ fontWeight: 'bold' }}>
+                <TableCell
+                  key={year}
+                  align="center"
+                  sx={{ fontWeight: 'bold', fontSize: isMobile ? '0.75rem' : '0.9rem' }}
+                >
                   {year}
                 </TableCell>
               ))}
@@ -304,36 +316,37 @@ function ResourceCirculationStatistics() {
           </TableHead>
           <TableBody>
             {data.map((row, index) => {
-              // 'subRows' 속성을 가지고 있는지 확인하여 RowWithSubRows 타입인지 식별
               if ('subRows' in row) {
-                const typedRow = row as RowWithSubRows; // 타입 단언
+                const typedRow = row as RowWithSubRows;
                 return (
                   <React.Fragment key={index}>
                     <TableRow>
                       <TableCell
-                        component="th"
-                        scope="row"
                         rowSpan={typedRow.subRows.length + 1}
-                        sx={{
-                          verticalAlign: 'top',
-                          fontWeight: 'bold',
-                          borderBottom: 'none',
-                        }}
+                        sx={{ verticalAlign: 'top', fontWeight: 'bold', fontSize: isMobile ? '0.75rem' : '0.9rem' }}
                       >
                         {typedRow.구분}
                       </TableCell>
-                      <TableCell sx={{ fontWeight: 'bold' }}>{typedRow.subRows[0].sub구분}</TableCell>
+                      <TableCell sx={{ fontWeight: 'bold', fontSize: isMobile ? '0.75rem' : '0.9rem' }}>
+                        {typedRow.subRows[0].sub구분}
+                      </TableCell>
                       {years.map((year) => (
-                        <TableCell key={year} align="center" sx={{ py: 1.5 }}>
+                        <TableCell key={year} align="center" sx={{ py: 1, fontSize: isMobile ? '0.75rem' : '0.9rem' }}>
                           {typedRow.subRows[0][year]}
                         </TableCell>
                       ))}
                     </TableRow>
                     {typedRow.subRows.slice(1).map((subRow, subIndex) => (
                       <TableRow key={`${index}-${subIndex}`}>
-                        <TableCell sx={{ fontWeight: 'bold' }}>{subRow.sub구분}</TableCell>
+                        <TableCell sx={{ fontWeight: 'bold', fontSize: isMobile ? '0.75rem' : '0.9rem' }}>
+                          {subRow.sub구분}
+                        </TableCell>
                         {years.map((year) => (
-                          <TableCell key={year} align="center" sx={{ py: 1.5 }}>
+                          <TableCell
+                            key={year}
+                            align="center"
+                            sx={{ py: 1, fontSize: isMobile ? '0.75rem' : '0.9rem' }}
+                          >
                             {subRow[year]}
                           </TableCell>
                         ))}
@@ -342,29 +355,14 @@ function ResourceCirculationStatistics() {
                   </React.Fragment>
                 );
               } else {
-                // 일반적인 TableRowData 타입의 행
-                const typedRow = row as TableRowData; // 타입 단언
+                const typedRow = row as TableRowData;
                 return (
                   <TableRow key={index}>
-                    <TableCell
-                      component="th"
-                      scope="row"
-                      sx={{ py: 1.5, verticalAlign: typedRow.isNested ? 'top' : 'middle' }}
-                    >
-                      {typeof typedRow.구분 === 'string' && typedRow.isNested ? (
-                        <Box sx={{ mt: 0 }}>
-                          {typedRow.구분.split('\n').map((line, i) => (
-                            <Typography key={i} variant="body2">
-                              {line}
-                            </Typography>
-                          ))}
-                        </Box>
-                      ) : (
-                        typedRow.구분
-                      )}
+                    <TableCell sx={{ fontSize: isMobile ? '0.75rem' : '0.9rem', fontWeight: 'bold' }}>
+                      {typedRow.구분}
                     </TableCell>
                     {years.map((year) => (
-                      <TableCell key={year} align="center" sx={{ py: 1.5 }}>
+                      <TableCell key={year} align="center" sx={{ py: 1, fontSize: isMobile ? '0.75rem' : '0.9rem' }}>
                         {typedRow[year]}
                       </TableCell>
                     ))}
@@ -380,9 +378,12 @@ function ResourceCirculationStatistics() {
 
   const renderTabContent = (data: TabContentData) => (
     <Box>
-      {data.sections.map((section, index) => (
+      {data.sections.map((section) => (
         <Box key={section.id} sx={{ mb: 4 }}>
-          <Typography variant="subtitle1" key={index} gutterBottom sx={{ fontWeight: 'bold' }}>
+          <Typography
+            variant={isMobile ? 'subtitle2' : 'subtitle1'}
+            sx={{ fontWeight: 'bold', fontSize: isMobile ? '1rem' : '1.1rem', mb: 1 }}
+          >
             <Box
               component="span"
               sx={{
@@ -390,81 +391,102 @@ function ResourceCirculationStatistics() {
                 width: '5px',
                 height: '5px',
                 borderRadius: '50%',
-                backgroundColor: '#4CAF50', // Green bullet point
+                backgroundColor: '#4CAF50',
                 mr: 1,
                 verticalAlign: 'middle',
               }}
             />
-            {section.subtitle}
+            {section.subtitle}{' '}
             {section.unit && (
-              <Typography component="span" variant="body2" color="text.secondary" sx={{ ml: 1 }}>
+              <Typography component="span" variant="body2" color="text.secondary">
                 {section.unit}
               </Typography>
             )}
           </Typography>
           {renderTable(section.rows)}
-          {section.notes && (
-            <Box sx={{ mt: -2, ml: 2, fontSize: '0.85rem', color: 'text.secondary' }}>
-              {section.notes.map((note, noteIndex) => (
-                <Typography key={noteIndex} variant="body2" sx={{ mb: 0.5 }}>
-                  {note}
-                </Typography>
-              ))}
-            </Box>
-          )}
-        </Box>
-      ))}
-      {data.notes && (
-        <Box sx={{ mt: 2, ml: 2, fontSize: '0.85rem', color: 'text.secondary' }}>
-          {data.notes.map((note, noteIndex) => (
-            <Typography key={noteIndex} variant="body2" sx={{ mb: 0.5 }}>
+          {section.notes?.map((note, i) => (
+            <Typography
+              key={i}
+              variant="body2"
+              sx={{ ml: 2, fontSize: isMobile ? '0.7rem' : '0.85rem', color: 'text.secondary' }}
+            >
               {note}
             </Typography>
           ))}
         </Box>
-      )}
+      ))}
+      {data.notes?.map((note, i) => (
+        <Typography
+          key={i}
+          variant="body2"
+          sx={{ ml: 2, fontSize: isMobile ? '0.7rem' : '0.85rem', color: 'text.secondary' }}
+        >
+          {note}
+        </Typography>
+      ))}
     </Box>
   );
 
   return (
-    <Box sx={{ p: 3, width: '100%' }}>
+    <Box sx={{ p: isMobile ? 2 : 3, width: '100%' }}>
       <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold', mb: 3 }}>
         <Box
           component="span"
-          sx={{
-            display: 'inline-block',
-            width: '10px',
-            height: '10px',
-            backgroundColor: '#4CAF50', // Green color from the image
-            mr: 1,
-          }}
+          sx={{ display: 'inline-block', width: '10px', height: '10px', backgroundColor: '#4CAF50', mr: 1 }}
         />
         자원순환 통계
       </Typography>
 
       <TabContext value={value}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 3 }}>
-          <TabList
-            onChange={handleChange}
-            aria-label="resource circulation statistics tabs"
-            TabIndicatorProps={{ sx: { backgroundColor: '#4CAF50' } }}
-            sx={{
-              '& .MuiTab-root': {
-                fontWeight: 'bold',
-                color: 'text.primary',
-                '&.Mui-selected': {
-                  color: '#4CAF50',
+        {/* ✅ 탭 선택 영역 */}
+        <Box sx={{ mb: 3 }}>
+          {isMobile ? (
+            <Grid container spacing={1}>
+              {tabItems.map((tab) => (
+                <Grid component="div" key={tab.value}>
+                  <Button
+                    variant={value === tab.value ? 'contained' : 'outlined'}
+                    fullWidth
+                    size="small"
+                    sx={{
+                      fontSize: '0.75rem',
+                      fontWeight: 'bold',
+                      backgroundColor: value === tab.value ? '#4CAF50' : 'transparent',
+                      color: value === tab.value ? '#fff' : 'text.primary',
+                      borderColor: '#4CAF50',
+                      '&:hover': {
+                        backgroundColor: value === tab.value ? '#43a047' : '#f1f1f1',
+                      },
+                    }}
+                    onClick={() => setValue(tab.value)}
+                  >
+                    {tab.label}
+                  </Button>
+                </Grid>
+              ))}
+            </Grid>
+          ) : (
+            <TabList
+              onChange={handleChange}
+              TabIndicatorProps={{ sx: { backgroundColor: '#4CAF50' } }}
+              sx={{
+                '& .MuiTab-root': {
+                  fontWeight: 'bold',
+                  fontSize: '0.9rem',
+                  color: 'text.primary',
+                  '&.Mui-selected': {
+                    color: '#4CAF50',
+                  },
                 },
-              },
-            }}
-          >
-            <Tab label="무단투기단속" value="무단투기단속" />
-            <Tab label="생활폐기물" value="생활폐기물" />
-            <Tab label="음식물류폐기물" value="음식물류폐기물" />
-            <Tab label="재활용품" value="재활용품" />
-            <Tab label="종량제봉투" value="종량제봉투" />
-          </TabList>
+              }}
+            >
+              {tabItems.map((tab) => (
+                <Tab label={tab.label} value={tab.value} key={tab.value} />
+              ))}
+            </TabList>
+          )}
         </Box>
+
         <TabPanel value="무단투기단속" sx={{ p: 0 }}>
           {renderTabContent(illegalDumpingData)}
         </TabPanel>
