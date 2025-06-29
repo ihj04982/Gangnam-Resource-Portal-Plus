@@ -19,6 +19,7 @@ import GeneralRequest from './pages/CleanPage/component/GeneralRequest';
 import BizTrash from './pages/CleanPage/component/BizTrash';
 import CoffeeGround from './pages/CleanPage/component/CoffeeGround';
 import GenCivilComplaint from './pages/CleanPage/component/GenCivilComplaint';
+import HomePage from './pages/Home';
 
 const AppLayout = React.lazy(() => import('./layout/AppLayout'));
 const LocationPage = React.lazy(() => import('./pages/LocationPage/LocationPage'));
@@ -28,6 +29,8 @@ const App = () => {
     <Suspense>
       <Routes>
         <Route path="/" element={<AppLayout />}>
+          <Route index element={<HomePage />} />
+
           <Route path="largewaste">
             <Route index element={<LargeWasteDisposalPage />} />
             <Route path="free" element={<FreeDisposalPage />} />
