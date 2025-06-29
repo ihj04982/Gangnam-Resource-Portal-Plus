@@ -2,14 +2,25 @@ import React from 'react';
 import RecyclingBagIcon from '../../assets/svg/RecyclingBagIcon';
 import RecyclingBinIcon from '../../assets/svg/RecyclingBinIcon';
 import RecyclingHandIcon from '../../assets/svg/RecyclingHandIcon';
+import { BASE_FONT_STYLE, BASE_RESET_STYLE } from '../../shared/styles/commonStyles';
+import { COLORS } from '../../theme';
 import BannerLeftContents from './component/BannerLeftContents';
 import MainVisualContainer from './component/MainVisual';
 import ServiceCard from './component/ServiceCard';
 import ServiceCardGrid from './component/ServiceCard/ServiceCardGrid';
+import ServiceShortcutSection from './component/ServiceShortcutSection';
 
 const HomePage: React.FC = () => {
+  const homeContainerStyle = {
+    ...BASE_RESET_STYLE,
+    ...BASE_FONT_STYLE,
+    position: 'relative' as const,
+    backgroundColor: COLORS.BACKGROUND_GRAY,
+    paddingBottom: '60px',
+  };
+
   return (
-    <div>
+    <div style={homeContainerStyle}>
       <MainVisualContainer>
         <ServiceCardGrid>
           <BannerLeftContents />
@@ -67,6 +78,8 @@ const HomePage: React.FC = () => {
           />
         </ServiceCardGrid>
       </MainVisualContainer>
+
+      <ServiceShortcutSection />
     </div>
   );
 };
