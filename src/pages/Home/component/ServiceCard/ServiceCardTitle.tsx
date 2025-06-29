@@ -2,7 +2,7 @@ import { Typography, styled } from '@mui/material';
 import React from 'react';
 
 interface ServiceCardTitleProps {
-  children: string;
+  children: React.ReactNode;
 }
 
 const StyledTitle = styled(Typography)({
@@ -14,7 +14,11 @@ const StyledTitle = styled(Typography)({
 }) as typeof Typography;
 
 const ServiceCardTitle: React.FC<ServiceCardTitleProps> = ({ children }) => {
-  return <StyledTitle component="h4" variant="h6" dangerouslySetInnerHTML={{ __html: children }} />;
+  return (
+    <StyledTitle component="h4" variant="h6">
+      {children}
+    </StyledTitle>
+  );
 };
 
 export default ServiceCardTitle;
