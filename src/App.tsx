@@ -20,6 +20,8 @@ import BizTrash from './pages/CleanPage/component/BizTrash';
 import CoffeeGround from './pages/CleanPage/component/CoffeeGround';
 import GenCivilComplaint from './pages/CleanPage/component/GenCivilComplaint';
 import PhoneVerificationPage from './pages/PhoneVerificationPage/PhoneVerificationPage';
+import ResponsiveTableNoScroll from './pages/CleanPage/practice/ResponsiveTableNoScroll';
+import HomePage from './pages/Home';
 
 const AppLayout = React.lazy(() => import('./layout/AppLayout'));
 const LocationPage = React.lazy(() => import('./pages/LocationPage/LocationPage'));
@@ -29,6 +31,8 @@ const App = () => {
     <Suspense>
       <Routes>
         <Route path="/" element={<AppLayout />}>
+          <Route index element={<HomePage />} />
+
           <Route path="largewaste">
             <Route index element={<LargeWasteDisposalPage />} />
             <Route path="free" element={<FreeDisposalPage />} />
@@ -62,6 +66,7 @@ const App = () => {
             <Route path="biz-trash" element={<BizTrash />} />
             <Route path="coffee-ground" element={<CoffeeGround />} />
             <Route path="gn-civil" element={<GenCivilComplaint />} />
+            <Route path="mTable" element={<ResponsiveTableNoScroll />} />
           </Route>
         </Route>
       </Routes>

@@ -1,13 +1,12 @@
-import { Outlet, useNavigate } from 'react-router';
-import { styled } from '@mui/material/styles';
-import { Box, Drawer, IconButton, List, ListItemButton, ListItemText, Typography } from '@mui/material';
-import { useLocation } from 'react-router';
 import HomeIcon from '@mui/icons-material/Home';
 import MenuIcon from '@mui/icons-material/Menu';
+import { Box, Drawer, IconButton, List, ListItemButton, ListItemText, Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { useState } from 'react';
+import { Outlet, useLocation, useNavigate } from 'react-router';
 import gangnamLogo from '../images/gangnam-gu-logo-crop.png';
 import gangnamLogoMain from '../images/gangnam-gu-logo-main.png';
 import largeWasteBanner from '../images/large-waste-banner.png';
-import { useState } from 'react';
 
 const Layout = styled('div')({
   display: 'flex',
@@ -229,6 +228,7 @@ const AppLayout = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const isLocationPage = location.pathname === '/locations';
+  const isHomePage = location.pathname === '/';
 
   return (
     <Layout>
@@ -304,7 +304,7 @@ const AppLayout = () => {
           </List>
         </Drawer>
       </Header>
-      {!isLocationPage && (
+      {!isLocationPage && !isHomePage && (
         <Banner>
           <Box sx={{ textAlign: 'center' }}>
             <Typography variant="h4" sx={{ fontWeight: 'bold', mb: 1 }}>
@@ -319,7 +319,7 @@ const AppLayout = () => {
       )}
 
       <Content>
-        {!isLocationPage && (
+        {!isLocationPage && !isHomePage && (
           <Sidebar>
             {location.pathname.startsWith('/largewaste') && (
               <>
