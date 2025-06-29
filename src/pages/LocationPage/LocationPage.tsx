@@ -99,7 +99,7 @@ const LocationPage = () => {
   const fluorescentLocations =
     fluorescent?.map((item) => ({
       address: item.설치위치,
-      label: item.동명,
+      label: `[${item.수거품목}] ${item.동명}`,
     })) || [];
 
   const wasteBagLocations =
@@ -111,7 +111,7 @@ const LocationPage = () => {
   const cigaretteButtLocations =
     cigaretteButt?.map((item) => ({
       address: item['위 치'] || item.설치주소,
-      label: item.설치주소,
+      label: `[${item.동명}] ${item.설치주소}`,
     })) || [];
 
   const clothingCollectionLocations =

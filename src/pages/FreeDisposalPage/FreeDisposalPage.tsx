@@ -1,6 +1,9 @@
 import { Box, Button, Typography, Grid, Link } from '@mui/material';
+import { useNavigate } from 'react-router';
 
 const FreeDisposalPage = () => {
+  const navigate = useNavigate();
+
   return (
     <Box sx={{ padding: 4 }}>
       {/* 소형폐가전 무상수거 안내 */}
@@ -58,7 +61,18 @@ const FreeDisposalPage = () => {
             >
               <Typography fontWeight="bold">{item.title}</Typography>
               <Typography whiteSpace="pre-line">{item.desc}</Typography>
-              <Button variant="contained" color="success" sx={{ mt: 2 }}>
+              <Button
+                variant="contained"
+                color="success"
+                sx={{ mt: 2 }}
+                onClick={() => {
+                  if (item.button === '수거 신청') {
+                    navigate('/largewaste/registration');
+                  } else {
+                    window.open('https://www.15990903.or.kr', '_blank');
+                  }
+                }}
+              >
                 {item.button}
               </Button>
             </Box>
@@ -106,7 +120,7 @@ const FreeDisposalPage = () => {
         <li>신청방법: 배출 3일 전 자원순환 종합포털 사전 신청</li>
       </Box>
       <Box sx={{ pl: 4, mt: 1 }}>
-        <Button variant="contained" color="success">
+        <Button variant="contained" color="success" onClick={() => navigate('/largewaste/registration')}>
           수거 신청
         </Button>
       </Box>
