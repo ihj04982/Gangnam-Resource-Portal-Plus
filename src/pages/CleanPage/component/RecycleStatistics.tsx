@@ -64,7 +64,6 @@ function ResourceCirculationStatistics() {
     { label: '음식물류폐기물', value: '음식물류폐기물' },
     { label: '재활용품', value: '재활용품' },
     { label: '종량제봉투', value: '종량제봉투' },
-    { label: '기타', value: '기타' }, // 필요시
   ];
 
   const illegalDumpingData: TabContentData = {
