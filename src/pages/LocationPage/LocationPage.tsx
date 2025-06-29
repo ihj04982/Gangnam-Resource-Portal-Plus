@@ -11,13 +11,18 @@ import CheckroomIcon from '@mui/icons-material/Checkroom';
 import theme from '../../theme';
 import { useState } from 'react';
 import type { SimpleLocation } from './component/NaverMap';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
-const Container = styled(Box)({
+const Container = styled(Box)(({ theme }) => ({
   display: 'flex',
   gap: '10px',
   width: '100%',
   height: '100%',
-});
+  [theme.breakpoints.down('sm')]: {
+    flexDirection: 'column',
+    gap: 0,
+  },
+}));
 
 const Sidebar = styled(Box)(({ theme }) => ({
   width: 331,
@@ -27,15 +32,39 @@ const Sidebar = styled(Box)(({ theme }) => ({
   alignItems: 'center',
   padding: '16px',
   background: theme.palette.background.paper,
+  [theme.breakpoints.down('sm')]: {
+    width: '100%',
+    borderRight: 'none',
+    borderTop: '1px solid #eee',
+    flexDirection: 'row',
+    alignItems: 'stretch',
+    padding: 0,
+    background: '#fff',
+    boxShadow: '0 -2px 8px rgba(0,0,0,0.07)',
+    position: 'static',
+    bottom: 'unset',
+    left: 'unset',
+    zIndex: 'auto',
+  },
 }));
 
-const SidebarGrid = styled(Box)({
+const SidebarGrid = styled(Box)(({ theme }) => ({
   display: 'grid',
   gridTemplateColumns: 'repeat(2, 1fr)',
   gap: '16px',
   width: '100%',
   justifyItems: 'center',
-});
+  [theme.breakpoints.down('sm')]: {
+    display: 'flex',
+    flexDirection: 'row',
+    overflowX: 'auto',
+    gap: '0',
+    width: '100%',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    padding: '8px 0',
+  },
+}));
 
 const SidebarGridButton = styled(Button)(({ theme }) => ({
   display: 'flex',
@@ -50,16 +79,29 @@ const SidebarGridButton = styled(Button)(({ theme }) => ({
   '&:active': {
     background: theme.palette.primary.main,
   },
+  [theme.breakpoints.down('sm')]: {
+    minWidth: 80,
+    minHeight: 80,
+    width: 80,
+    height: 80,
+    borderRadius: 8,
+    margin: '0 4px',
+    fontSize: '12px',
+    padding: 0,
+  },
 }));
 
-const IconBox = styled('div')({
+const IconBox = styled('div')(({ theme }) => ({
   width: 32,
   height: 32,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   marginBottom: 6,
-});
+  [theme.breakpoints.down('sm')]: {
+    marginBottom: 2,
+  },
+}));
 
 const SidebarButtonText = styled(Typography)(({ theme }) => ({
   fontSize: '13px',
@@ -67,12 +109,20 @@ const SidebarButtonText = styled(Typography)(({ theme }) => ({
   overflowWrap: 'break-word',
   lineHeight: 1.2,
   color: theme.palette.text.secondary,
+  [theme.breakpoints.down('sm')]: {
+    fontSize: '11px',
+    lineHeight: 1.1,
+  },
 }));
 
-const MapContainer = styled(Box)({
+const MapContainer = styled(Box)(({ theme }) => ({
   width: '100%',
   height: '100%',
-});
+  [theme.breakpoints.down('sm')]: {
+    minHeight: '400px',
+    paddingBottom: 0,
+  },
+}));
 
 const LocationPage = () => {
   const { data: fluorescent, isLoading: isLoadingFluorescent, error: errorFluorescent } = useFluorescentBattery(1, 155);
@@ -87,6 +137,7 @@ const LocationPage = () => {
   const [selectedType, setSelectedType] = useState<'fluorescent' | 'wasteBag' | 'cigaretteButt' | 'clothingCollection'>(
     'fluorescent',
   );
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   if (isLoadingFluorescent || isLoadingWasteBag || isLoadingCigaretteButt || isLoadingClothingCollection) {
     return <div>Loading...</div>;
@@ -137,40 +188,72 @@ const LocationPage = () => {
 
   return (
     <Container>
-      <Sidebar>
-        <Typography variant="h6" sx={{ fontWeight: 600, color: theme.palette.text.primary }}>
-          위치정보
-        </Typography>
-        <SidebarGrid>
-          <SidebarGridButton onClick={() => setSelectedType('fluorescent')}>
-            <IconBox>
-              <LightbulbIcon fontSize="large" />
-            </IconBox>
-            <SidebarButtonText>폐형광등 폐건전지</SidebarButtonText>
-          </SidebarGridButton>
-          <SidebarGridButton onClick={() => setSelectedType('wasteBag')}>
-            <IconBox>
-              <DeleteIcon fontSize="large" />
-            </IconBox>
-            <SidebarButtonText>쓰레기봉투 판매처</SidebarButtonText>
-          </SidebarGridButton>
-          <SidebarGridButton onClick={() => setSelectedType('cigaretteButt')}>
-            <IconBox>
-              <SmokingRoomsIcon fontSize="large" />
-            </IconBox>
-            <SidebarButtonText>담배꽁초 수거함</SidebarButtonText>
-          </SidebarGridButton>
-          <SidebarGridButton onClick={() => setSelectedType('clothingCollection')}>
-            <IconBox>
-              <CheckroomIcon fontSize="large" />
-            </IconBox>
-            <SidebarButtonText>의류수거함</SidebarButtonText>
-          </SidebarGridButton>
-        </SidebarGrid>
-      </Sidebar>
+      {!isMobile && (
+        <Sidebar>
+          <Typography variant="h6" sx={{ fontWeight: 600, color: theme.palette.text.primary, mb: 2 }}>
+            위치정보
+          </Typography>
+          <SidebarGrid>
+            <SidebarGridButton onClick={() => setSelectedType('fluorescent')}>
+              <IconBox>
+                <LightbulbIcon fontSize="large" />
+              </IconBox>
+              <SidebarButtonText>폐형광등 폐건전지</SidebarButtonText>
+            </SidebarGridButton>
+            <SidebarGridButton onClick={() => setSelectedType('wasteBag')}>
+              <IconBox>
+                <DeleteIcon fontSize="large" />
+              </IconBox>
+              <SidebarButtonText>쓰레기봉투 판매처</SidebarButtonText>
+            </SidebarGridButton>
+            <SidebarGridButton onClick={() => setSelectedType('cigaretteButt')}>
+              <IconBox>
+                <SmokingRoomsIcon fontSize="large" />
+              </IconBox>
+              <SidebarButtonText>담배꽁초 수거함</SidebarButtonText>
+            </SidebarGridButton>
+            <SidebarGridButton onClick={() => setSelectedType('clothingCollection')}>
+              <IconBox>
+                <CheckroomIcon fontSize="large" />
+              </IconBox>
+              <SidebarButtonText>의류수거함</SidebarButtonText>
+            </SidebarGridButton>
+          </SidebarGrid>
+        </Sidebar>
+      )}
       <MapContainer>
         <NaverMap locations={locations} />
       </MapContainer>
+      {isMobile && (
+        <Sidebar>
+          <SidebarGrid>
+            <SidebarGridButton onClick={() => setSelectedType('fluorescent')}>
+              <IconBox>
+                <LightbulbIcon fontSize="large" />
+              </IconBox>
+              <SidebarButtonText>폐형광등 폐건전지</SidebarButtonText>
+            </SidebarGridButton>
+            <SidebarGridButton onClick={() => setSelectedType('wasteBag')}>
+              <IconBox>
+                <DeleteIcon fontSize="large" />
+              </IconBox>
+              <SidebarButtonText>쓰레기봉투 판매처</SidebarButtonText>
+            </SidebarGridButton>
+            <SidebarGridButton onClick={() => setSelectedType('cigaretteButt')}>
+              <IconBox>
+                <SmokingRoomsIcon fontSize="large" />
+              </IconBox>
+              <SidebarButtonText>담배꽁초 수거함</SidebarButtonText>
+            </SidebarGridButton>
+            <SidebarGridButton onClick={() => setSelectedType('clothingCollection')}>
+              <IconBox>
+                <CheckroomIcon fontSize="large" />
+              </IconBox>
+              <SidebarButtonText>의류수거함</SidebarButtonText>
+            </SidebarGridButton>
+          </SidebarGrid>
+        </Sidebar>
+      )}
     </Container>
   );
 };
