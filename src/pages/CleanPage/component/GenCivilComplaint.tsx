@@ -28,7 +28,7 @@ function GenCivilComplaint() {
       </Typography>
 
       <TableContainer component={Paper} sx={{ mb: 3 }}>
-        <Table sx={{ minWidth: 650 }} aria-label="cleaning scope table">
+        <Table sx={{ minWidth: 650 }} aria-label="cleaning scope table" className="mTable">
           <TableHead>
             <TableRow sx={{ backgroundColor: '#f5f5f5' }}>
               <TableCell align="center" sx={{ fontWeight: 'bold', width: '10%' }}>

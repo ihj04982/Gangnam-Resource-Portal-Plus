@@ -289,7 +289,7 @@ function ResourceCirculationStatistics() {
 
     return (
       <TableContainer component={Paper} sx={{ mb: 4, overflowX: 'auto' }}>
-        <Table sx={{ minWidth: 650 }} aria-label="statistics table">
+        <Table sx={{ minWidth: 650 }} aria-label="statistics table" className="mTable">
           <TableHead>
             <TableRow sx={{ backgroundColor: '#f5f5f5' }}>
               <TableCell align="center" sx={{ fontWeight: 'bold', minWidth: 100 }}>
