@@ -76,6 +76,10 @@ const getBannerTitle = () => {
       return '대형생활폐기물 안내';
     case '/largewaste/free':
       return '무상수거 안내';
+    case '/largewaste/registration':
+      return '배출 신청';
+    case '/largewaste/confirmation':
+      return '배출 신청내역 확인';
     case '/notice/announcements':
       return '공지사항';
     case '/notice/faq':
@@ -115,6 +119,10 @@ const getBreadcrumb = () => {
       return '대형생활폐기물 > 대형생활폐기물 안내';
     case '/largewaste/free':
       return '대형생활폐기물 > 무상수거 안내';
+    case '/largewaste/registration':
+      return '대형생활폐기물 > 배출 신청';
+    case '/largewaste/confirmation':
+      return '대형생활폐기물 > 배출 신청내역 확인';
     case '/notice/announcements':
       return '게시판 > 공지사항';
     case '/notice/faq':
@@ -225,7 +233,7 @@ const AppLayout = () => {
   return (
     <Layout>
       <Header>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, cursor: 'pointer' }} onClick={() => navigate('/')}>
           <img src={gangnamLogoMain} alt="강남구 로고" style={{ height: 60 }} />
           <Typography variant="h6" sx={{ fontWeight: 700 }}>
             자원순환 종합포털
@@ -329,8 +337,18 @@ const AppLayout = () => {
                   >
                     무상수거 안내
                   </MenuItem>
-                  <MenuItem>배출 신청</MenuItem>
-                  <MenuItem>배출 신청내역 확인</MenuItem>
+                  <MenuItem
+                    className={location.pathname === '/largewaste/registration' ? 'active' : ''}
+                    onClick={() => navigate('/largewaste/registration')}
+                  >
+                    배출 신청
+                  </MenuItem>
+                  <MenuItem
+                    className={location.pathname === '/largewaste/confirmation' ? 'active' : ''}
+                    onClick={() => navigate('/largewaste/confirmation')}
+                  >
+                    배출 신청내역 확인
+                  </MenuItem>
                 </SidebarMenu>
               </>
             )}

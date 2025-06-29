@@ -42,7 +42,7 @@ const CoffeeGround = () => {
         • 현황
       </Typography>
       <TableContainer component={Paper} sx={{ maxWidth: 600, mb: 3 }}>
-        <Table size="small">
+        <Table size="small" className="mTable">
           <TableHead sx={{ backgroundColor: '#eee' }}>
             <TableRow>
               <TableCell>연도</TableCell>
