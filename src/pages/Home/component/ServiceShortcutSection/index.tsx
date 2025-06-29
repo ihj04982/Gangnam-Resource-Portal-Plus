@@ -16,7 +16,7 @@ const ServiceShortcutSection: React.FC = () => {
       <div style={CONTAINER_STYLE}>
         <ul style={FLEX_LIST_STYLE}>
           {shortcutItems.map((title, index) => (
-            <ServiceShortcutCard key={index} title={title} />
+            <ServiceShortcutCard key={index} title={title} index={index} />
           ))}
         </ul>
       </div>

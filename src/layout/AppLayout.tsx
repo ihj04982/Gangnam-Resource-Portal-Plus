@@ -207,7 +207,6 @@ const MenuItem = styled('div')({
 
 const MainContent = styled('div')({
   flex: 1,
-  padding: '24px',
 });
 
 const Footer = styled('div')(() => ({
