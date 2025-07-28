@@ -1,54 +1,82 @@
-# React + TypeScript + Vite
+# 강남구청 폐기물 관리 시스템
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+TypeScript 스터디 팀 프로젝트 강남구 공식 자원순환 플랫폼 클론코딩
 
-Currently, two official plugins are available:
+## 🚀 프로젝트 개요
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+이 프로젝트는 TypeScript 스터디 팀 프로젝트를 위해 강남구 공식 자원순환 플랫폼을 클론 코딩한 웹 애플리케이션입니다. React, TypeScript, Vite를 기반으로 구축되었으며, Material-UI를 사용하여 현대적이고 사용자 친화적인 인터페이스를 제공합니다.
 
-## Expanding the ESLint configuration
+## 🛠️ 기술 스택
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Frontend
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- **React 19.1.0** - 사용자 인터페이스 구축
+- **TypeScript** - 타입 안정성 및 개발 생산성 향상
+- **Vite** - 빠른 개발 환경 및 빌드 도구
+- **Material-UI (MUI)** - UI 컴포넌트 라이브러리
+- **React Router** - 클라이언트 사이드 라우팅
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Backend & Database
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- **Firebase Firestore** - 실시간 데이터베이스
+- **Firebase Authentication** - 사용자 인증
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+### Development Tools
+
+- **ESLint** - 코드 품질 관리
+- **Prettier** - 코드 포맷팅
+- **Husky** - Git hooks 관리
+- **React Query** - 서버 상태 관리
+
+## 🎯 주요 기능
+
+### 1. 홈페이지 (`/`)
+
+- **메인 비주얼**: 강남구청 폐기물 관리 서비스 소개
+- **서비스 카드**: 대형폐기물 배출, 재활용 분리배출, 종량제봉투 판매소
+- **실시간 정보**: Firebase에서 최신 FAQ 및 공지사항 표시
+- **서비스 바로가기**: 주요 서비스로의 빠른 접근
+
+### 2. 대형폐기물 배출 (`/largewaste`)
+
+- **수거대상 물품/수수료 확인**: 모달을 통한 상세 정보 제공
+- **무료배출 신청**: 무료배출 대상 확인 및 신청
+- **휴대폰 인증**: 사용자 본인확인 시스템
+- **전국 대형폐기물 수수료 데이터**: JSON 기반 실시간 데이터
+
+### 3. 공지사항 및 FAQ (`/notice`)
+
+- **공지사항 목록**: Firebase 연동 실시간 데이터
+- **검색 기능**: 제목 기반 검색
+- **페이지네이션**: 효율적인 데이터 로딩
+- **상세 페이지**: 개별 공지사항 및 FAQ 상세 보기
+
+### 4. 위치 정보 (`/locations`)
+
+- **네이버 지도 연동**: 실시간 지도 서비스
+- **다양한 시설 정보**:
+  - 형광등/건전지 수거함
+  - 종량제봉투 판매소
+  - 흡연구역
+  - 의류수거함
+- **클러스터링**: 대량의 마커를 효율적으로 표시
+- **반응형 디자인**: 모바일 최적화
+
+### 5. 청소 관련 서비스 (`/clean`)
+
+- **쓰레기 분리배출**: 올바른 분리배출 방법 안내
+- **하수도 관리**: 하수도 관련 정보
+- **재활용 통계**: 재활용 현황 및 통계
+- **재활용 센터**: 강남구 재활용 센터 정보
+- **환경재활용센터**: 환경재활용센터 정보
+- **일반민원**: 민원 접수 안내
+- **사업장쓰레기**: 사업장 폐기물 관리
+- **커피찌꺼기 재자원화**: 커피찌꺼기 수거 사업 정보
+- **일반민원**: 민원 접수 시스템
+
+## 🔒 보안 및 인증
+
+- **Firebase Authentication**: 사용자 인증 시스템
+- **환경 변수**: 민감한 정보 보호
+- **CORS 설정**: 안전한 API 통신
+
